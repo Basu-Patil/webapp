@@ -1,14 +1,13 @@
 import { sequelize } from "../database/database_connection.js";
 
-export const healthCheck = async (req, res) => {
+export const healthCheck = async (req, res, next) => {
     try{
 
         await sequelize.authenticate();
-        res.status(200).send();
+        next();
         return
     }
     catch(error){
-        res.status(503).send();
-        return
+        return res.status(503).send();
     }
 }
