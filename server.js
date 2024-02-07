@@ -16,7 +16,7 @@ const port = process.env.PORT;
 
 initialize(app);
 
-//  creating the database if it won't exist
+
 createDatabase()
     .then(() => {
         console.log("Database created successfully");
@@ -32,11 +32,5 @@ createDatabase()
         console.log("Error in creating database: ", error);
         throw error;
     });
-
-//  creating the tables if they won't exist in the database
-
-
-
-//  creating the tables if they won't exist in the database
 
 export default app;
