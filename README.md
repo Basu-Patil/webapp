@@ -40,6 +40,6 @@ To start the application, run:
 
 ```bash
 npm start or
-npm run dev_start if you want to start using nodemon
+npm run dev_start //if you want to start using nodemon
 ```
 
