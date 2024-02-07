@@ -10,6 +10,9 @@ const hashPassword = async (password) => {
 export const createUser = async (user) => {
     const { username, password, first_name, last_name } = user;
     try {
+        if((user.id || user.account_created || user.account_updated)){
+            throw new Error('Cannot update username');
+        }
         const hashedPassword = await hashPassword(password);
 
         const newuser = await User.create({
