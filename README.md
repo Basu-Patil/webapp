@@ -13,13 +13,13 @@ This repository contains a Web App API with two endpoints: `healthz` and `user`.
 
 ### 2. User
 
-- **Endpoint**: `/user`
+- **Endpoint**: `/v1/user`
 - **Method**: 
   - `POST`: Create user.
 - **Authentication**: No authentication required.
 - **Description**: This endpoint allows performing user creation operation.
 
-- **Endpoint**: `/user/self`
+- **Endpoint**: `/v1/user/self`
 - **Method**: 
   - `GET`: Read user details.
   - `PUT`: Update user details.
