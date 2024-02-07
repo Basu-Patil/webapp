@@ -44,7 +44,7 @@ export const getUser = async (user) => {
 export const updateUser = async (currentuserDetails, updateUserDetails) => {
     const { first_name, last_name, password } = updateUserDetails;
     try {
-        if((updateUserDetails.username)){
+        if((updateUserDetails.username || updateUserDetails.id || updateUserDetails.account_created || updateUserDetails.account_updated)){
             throw new Error('Cannot update username');
         }
         const username = currentuserDetails.username;
