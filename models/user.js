@@ -25,9 +25,11 @@ const User = sequelize.define('User', {
     last_name: {
         type: DataTypes.STRING,
         allowNull: false
-    },
+    }
 },{
     tableName: 'users',
+    createdAt: 'account_created',
+    updatedAt: 'account_updated',
     scopes:{
         withoutPassword: {
             attributes: {exclude: ['password']}
