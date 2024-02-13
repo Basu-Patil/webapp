@@ -13,7 +13,7 @@ describe('Middlware Testing', () => {
 
             onlyGetMethodAllowed(req, res, next);
             
-            expect(res.status.calledWith(401)).to.be.true;
+            expect(res.status.calledWith(405)).to.be.true;
         });
     }
     );
