@@ -1,7 +1,7 @@
-name: Build and Deploy Node.js App
+name: Integration Test
 
 on:
-  pull_request:
+  push:
     branches: main
 
 jobs:
@@ -18,6 +18,15 @@ jobs:
   
         - name: Install Dependencies
           run: npm install
+
+        - name: Check MySQL Status
+          run: |
+            status=$(ssh user@mysql-server "systemctl status mysql")
+            echo "$status"
+            if echo "$status" | grep -q "Active: active (running)"; then
+                echo "MySQL server is running"
+            else
+                echo "MySQL server is not running"
   
         - name: Run Integration Tests
           run: npm test
