@@ -20,12 +20,14 @@ jobs:
 
         - name: Check MySQL Status
           run: |
-            status=$(ssh user@mysql-server "systemctl status mysql")
+            status=$(systemctl status mysql)
             echo "$status"
             if echo "$status" | grep -q "Active: active (running)"; then
                 echo "MySQL server is running"
             else
                 echo "MySQL server is not running"
+            fi
+        
   
         - name: Run Integration Tests
           run: npm test
