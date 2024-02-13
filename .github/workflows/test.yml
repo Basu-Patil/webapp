@@ -1,0 +1,33 @@
+name: Build and Deploy Node.js App
+
+on:
+  pull_request:
+    branches: main
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      name: Integration Tests
+      steps:
+        - uses: actions/checkout@v4
+  
+        - name: Set Up Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '20.4.0'
+  
+        - name: Install Dependencies
+          run: npm install
+  
+        - name: Run Integration Tests
+          run: npm test
+          env:
+            PORT: ${{ secrets.PORT }}
+            MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+            MYSQL_USER: ${{ secrets.MYSQL_USER }}
+            MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+            MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+            DIALECT: ${{ secrets.DIALECT }}
+            MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+            
+      
