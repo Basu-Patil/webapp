@@ -17,6 +17,18 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      - name: Start MySQL
+        run: | 
+          sudo /etc/init.d/mysql start
 
       - name: Run test cases
         run: npm test
+        env:
+          PORT: ${{ secrets.PORT }}
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          DIALECT: ${{ secrets.DIALECT }}
+          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
