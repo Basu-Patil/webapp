@@ -17,6 +17,8 @@ before(async () => {
 
     // Initialize supertest request
     request = supertest(app);
+
+    await User.destroy({ where: { username: userDetails.username } });
 });
 
 // Test data
@@ -33,9 +35,7 @@ const updatedUserDetails = {
     "first_name": "test",
     "last_name": "user"
 }
-before(async () => {
-    await User.destroy({ where: { username: userDetails.username } });
-});
+
 describe("Success User API Integration Test", () => {
 
     // Test 1: Create a new user
