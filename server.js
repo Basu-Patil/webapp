@@ -2,7 +2,7 @@
 import express from 'express';
 import initialize from './app.js';
 import dotenv from 'dotenv';
-import sequelize, { createDatabase } from './database/database_connection.js';
+import { sequelize, createDatabase } from './database/database_connection.js';
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ export let server;
 createDatabase()
     .then(() => {
         console.log("Database created successfully");
-        sequelize.sync({ alter: true })
+        sequelize.sync({alter:true})
             .then(() => {
                 server = app.listen(port, () => console.log(`Server is listening at port ${port}`));
             })

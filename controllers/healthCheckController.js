@@ -1,4 +1,4 @@
-import sequelize from "../database/database_connection.js";
+import {sequelize} from "../database/database_connection.js";
 import {healthCheck} from "../services/healthCheckService.js";
 
 
