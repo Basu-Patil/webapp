@@ -135,6 +135,7 @@ describe('Health Check API', () => {
 });
 
 
-after(() =>{
+after(async () =>{
   server.close();
+  await sequelize.close();
 })
