@@ -21,7 +21,7 @@ jobs:
         - name: Start MySQL
           run: | 
             sudo /etc/init.d/mysql start
-            mysql -e "CREATE DATABASE IF NOT EXISTS {{ secrets.MYSQL_DATABASE }};" -u${{ secrets.MYSQL_USER }} -p${{ secrets.MYSQL_PASSWORD }}
+            mysql -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.MYSQL_DATABASE }};" -u${{ secrets.MYSQL_USER }} -p${{ secrets.MYSQL_PASSWORD }}
             
       
         # - name: Change MySQL root password
