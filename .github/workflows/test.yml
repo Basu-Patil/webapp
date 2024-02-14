@@ -18,15 +18,12 @@ jobs:
         - name: Install Dependencies
           run: npm install
 
-        - name: Check MySQL Status
+        - name: Start MySQL
+          run: sudo /etc/init.d/mysql start
+      
+        - name: Change MySQL root password
           run: |
-            status=$(systemctl status mysql)
-            echo "$status"
-            if echo "$status" | grep -q "Active: active (running)"; then
-                echo "MySQL server is running"
-            else
-                echo "MySQL server is not running"
-            fi
+            sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${{ secrets.MYSQL_PASSWORD }}';"
         
   
         - name: Run Integration Tests
