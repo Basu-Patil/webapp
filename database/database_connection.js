@@ -30,5 +30,3 @@ export const sequelize = new Sequelize({
     logging: false,
     port: process.env.MYSQL_PORT
 })
-
-export default sequelize;

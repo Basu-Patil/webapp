@@ -1,9 +1,20 @@
 import {expect} from 'chai';
 import supertest from 'supertest';
-import app from '../server.js';
+import app, {server} from '../server.js';
+import {sequelize, createDatabase} from '../database/database_connection.js';
 
 
-const request = supertest(app);
+let request;
+before(async () => {
+    // Create database if not exists
+    await createDatabase();
+
+    // Sync Sequelize models
+    await sequelize.sync();
+
+    // Initialize supertest request
+    request = supertest(app);
+});
 
 describe('Health Check API', () => {
 
@@ -122,3 +133,8 @@ describe('Health Check API', () => {
   });
 
 });
+
+
+after(() =>{
+  server.close();
+})

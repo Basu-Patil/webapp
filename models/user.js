@@ -1,4 +1,4 @@
-import sequelize from "../database/database_connection.js";
+import {sequelize} from "../database/database_connection.js";
 import { DataTypes } from 'sequelize';
 const User = sequelize.define('User', {
     id:{
@@ -48,13 +48,13 @@ const User = sequelize.define('User', {
             attributes: {exclude: ['id']}
         }
     },
-    indexes:[
-        {
-            unique: true,
-            fields: ['username'],
-            name: 'idx_username'
-        }
-    ]
+    // indexes:[
+    //     {
+    //         unique: true,
+    //         fields: ['username'],
+    //         name: 'idx_username'
+    //     }
+    // ]
 });
 
 export default User;
