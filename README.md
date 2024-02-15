@@ -2,6 +2,14 @@
 
 This repository contains a Web App API with two endpoints: `healthz` and `user`.
 
+## Prerequisites
+
+Before running this Web App API, ensure you have the following prerequisites:
+
+1. **Node.js and npm**: Make sure you have Node.js and npm installed on your system. You can download and install them from the [official Node.js website](https://nodejs.org/).
+
+2. **MySQL Database**: You need to have a MySQL database server set up. You can install MySQL locally or use a remote MySQL database service. Refer to the [official MySQL documentation](https://dev.mysql.com/doc/) for installation instructions.
+
 ## Endpoints
 
 ### 1. Healthz
@@ -42,4 +50,6 @@ To start the application, run:
 npm start or
 npm run dev_start //if you want to start using nodemon
 ```
-demo update
+
+### Testing
+Under the test folder, you'll find test files that can be used for testing the Web App API. These tests cover various aspects of the API's functionality and can be run using testing frameworks like chai, supertest and Mocha.
