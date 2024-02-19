@@ -16,7 +16,9 @@ jobs:
             - name: Setup HashiCorp Packer
               uses: hashicorp/setup-packer@v3.0.0
         
-
+            - name: Initialize Packer template
+              run: packer init packer/
+              
             - name: Validate Packer template
               run: packer validate packer/
 

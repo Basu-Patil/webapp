@@ -5,11 +5,6 @@ packer {
       source  = "github.com/hashicorp/googlecompute"
       version = ">= 1.1.4"
     }
-    // git plugin is required to pull in the git repo
-    git = {
-      version = ">= 0.5.0"
-      source  = "github.com/ethanmdavidson/git"
-    }
   }
 }
 
