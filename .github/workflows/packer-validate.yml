@@ -1,9 +1,9 @@
 name: format and validate packer
 
 on:
-    push: #change to pull_request later
+    pull_request:
         branches: 
-            - A4 #change to main later
+            - main
 
 jobs:
     packer:
