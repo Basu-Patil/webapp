@@ -10,7 +10,7 @@ packer {
 
 // get the latest centos 8 base image
 source "googlecompute" "centos-8" {
-  naimage_nameme = "webapp-custom-image"
+  image_name = "webapp-custom-image"
   project_id = var.project_id
   source_image_family = var.source_image_family
   zone = var.zone
