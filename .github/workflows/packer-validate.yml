@@ -18,7 +18,7 @@ jobs:
         
 
             - name: Validate Packer template
-              run: packer validate ../packer/ 
+              run: packer validate packer/
 
             - name: Format Packer template
-              run: packer fmt ../packer/
+              run: packer fmt packer/

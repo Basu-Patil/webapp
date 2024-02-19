@@ -32,7 +32,7 @@ jobs:
 
       - name: Build the Packer
         run: |
-          packer build ../packer/*pkr.hcl \
+          packer build packer/*pkr.hcl \
             -var "port=${{ secrets.PORT }}" \
             -var "mysql_host=${{ secrets.MYSQL_HOST }}" \
             -var "mysql_user=${{ secrets.MYSQL_USER }}" \
