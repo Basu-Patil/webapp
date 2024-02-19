@@ -1,0 +1,16 @@
+[Unit]
+Description=Node.js Web Application
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node ~/projects/webapp/server.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=nodejs-webapp
+User=csye6225
+Group=csye6225
+
+[Install]
+WantedBy=multi-user.target
