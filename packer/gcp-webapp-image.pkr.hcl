@@ -27,9 +27,9 @@ build {
   sources = ["source.googlecompute.centos-8"]
   provisioner "shell" {
     script = "scripts/initial-setup.sh"
-    environment_vars = 
-    [
-        "MYSQL_PASSWORD=${var.MYSQL_PASSWORD}"]
+    environment_vars = [
+        "MYSQL_PASSWORD=${var.MYSQL_PASSWORD}"
+    ]
   }
 
   #transfer the web app code to the instance
@@ -45,8 +45,7 @@ build {
 
   provisioner "shell" {
     script = "scripts/post-deploy-setup.sh"
-    environment_vars = 
-    [
+    environment_vars = [
         "PORT=${var.PORT}",
         "MYSQL_HOST=${var.MYSQL_HOST}",
         "MYSQL_USER=${var.MYSQL_USER}",
