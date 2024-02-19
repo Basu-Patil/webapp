@@ -21,9 +21,9 @@ source "googlecompute" "centos-8" {
 build {
   sources = ["source.googlecompute.centos-8"]
   provisioner "shell" {
-    script = "./scripts/initial-setup.sh"
+    script = "packer/scripts/initial-setup.sh"
     environment_vars = [
-        "MYSQL_PASSWORD=${var.MYSQL_PASSWORD}"
+        "MYSQL_PASSWORD=${var.mysql_password}"
     ]
   }
 
@@ -35,19 +35,19 @@ build {
   }
 
   provisioner "shell" {
-    script = "./scripts/web-app-setup.sh"
+    script = "packer/scripts/web-app-setup.sh"
   }
 
   provisioner "shell" {
-    script = "./scripts/post-deploy-setup.sh"
+    script = "packer/scripts/post-deploy-setup.sh"
     environment_vars = [
-        "PORT=${var.PORT}",
-        "MYSQL_HOST=${var.MYSQL_HOST}",
-        "MYSQL_USER=${var.MYSQL_USER}",
-        "MYSQL_PASSWORD=${var.MYSQL_PASSWORD}",
-        "MYSQL_DATABASE=${var.MYSQL_DATABASE}",
-        "DIALECT=${var.DIALECT}",
-        "MYSQL_PORT=${var.MYSQL_PORT}"
+        "PORT=${var.port}",
+        "MYSQL_HOST=${var.mysql_host}",
+        "MYSQL_USER=${var.mysql_user}",
+        "MYSQL_PASSWORD=${var.mysql_password}",
+        "MYSQL_DATABASE=${var.mysql_database}",
+        "DIALECT=${var.dialect}",
+        "MYSQL_PORT=${var.mysql_port}"
     ]
       
   }
