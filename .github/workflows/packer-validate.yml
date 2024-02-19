@@ -1,9 +1,9 @@
 name: format and validate packer
 
 on:
-    pull_request: 
+    push: #change to pull_request later
         branches: 
-            - main
+            - A4 #change to main later
 
 jobs:
     packer:
@@ -11,14 +11,17 @@ jobs:
         name: format-and-validate-packer
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
+            
+            - name: Zip webapp
+              run: zip -r webapp.zip webapp
             
             - name: Setup HashiCorp Packer
               uses: hashicorp/setup-packer@v3.0.0
         
             - name: Initialize Packer template
               run: packer init packer/
-              
+
             - name: Validate Packer template
               run: packer validate packer/
 
