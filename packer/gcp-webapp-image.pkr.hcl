@@ -52,4 +52,18 @@ build {
       
   }
 
+  # create user and group
+  provisioner "shell" {
+    script = "packer/scripts/user-group-setup.sh"
+  }
+
+  provisioner "file"{
+    source = "packer/system-service-files/webapp.service"
+    destination = "/etc/systemd/system/webapp.service"
+  }
+
+  provisioner "shell" {
+    script = "packer/scripts/systemd-setup.sh"
+  }
+
 }
