@@ -1,0 +1,27 @@
+name: Create custom image
+
+on:
+    pull_request: 
+        types: [closed]
+        branches: 
+            - main
+
+# zip the webapp github repository and store it in current directory
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Zip webapp
+              run: zip -r webapp.zip webapp
+            - name: Build the Packer
+              run: packer build ../packer/*pkr.hcl
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  AWS_REGION: us-east-1
+            
+            
+
+            
