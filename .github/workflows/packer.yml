@@ -26,9 +26,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: 'main'
 
       - name: Zip webapp
-        run: zip -r webapp.zip webapp
+        run: zip -r webapp.zip .
 
       - name: Build the Packer
         run: |
