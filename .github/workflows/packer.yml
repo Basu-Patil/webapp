@@ -2,8 +2,6 @@ name: Create custom image
 
 on:
   push:
-    branches: 
-      - A4
 
 jobs:
   job_id:
