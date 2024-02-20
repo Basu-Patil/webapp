@@ -3,6 +3,8 @@ name: Create custom image
 on:
   push:
 
+env:
+  PRODUCT_VERSION: "1.8.6" # or: "latest"
 jobs:
   job_id:
     runs-on: ubuntu-latest
@@ -19,6 +21,12 @@ jobs:
     
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
+      
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: ${{ env.PRODUCT_VERSION }}
     
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
@@ -28,5 +36,15 @@ jobs:
 
       - name: cat pkr.hcl
         run: cat ./packer/*pkr.hcl
+      
+      - name: format packer
+        run: packer fmt ./packer/*pkr.hcl
+      
+      - name: init packer
+        run: packer init ./packer/*pkr.hcl
+      
+      - name: validate packer
+        run: packer validate ./packer/*pkr.hcl
+
       - name: Build the Packer
         run: packer build -debug -var "mysql_password=${{ secrets.MYSQL_PASSWORD }}" ./packer/*pkr.hcl
