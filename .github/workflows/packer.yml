@@ -9,6 +9,11 @@ jobs:
   job_id:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: 'main'
+
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
@@ -19,11 +24,6 @@ jobs:
     
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
-        
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: 'main'
 
       - name: Zip webapp
         run: zip -r webapp.zip .
@@ -38,4 +38,4 @@ jobs:
             -var "mysql_database=${{ secrets.MYSQL_DATABASE }}" \
             -var "mysql_port=${{ secrets.MYSQL_PORT }}" \
             -var "mysql_root_password=${{ secrets.MYSQL_PASSWORD }}" \
-            packer/*pkr.hcl
+            ./packer/*pkr.hcl
