@@ -69,7 +69,7 @@ describe("Success User API Integration Test", () => {
             .auth(userDetails.username, userDetails.password);
         
         expect(resp.status).to.equal(200);
-        expect(resp.body.first_name).to.equal("updated");
+        expect(resp.body.first_name).to.equal("asdfgf");
     });
 
 });
