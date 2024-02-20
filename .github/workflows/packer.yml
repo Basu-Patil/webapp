@@ -1,10 +1,9 @@
 name: Create custom image
 
 on:
-  pull_request: 
-    types: [closed]
+  push:
     branches: 
-      - main
+      - A4
 
 jobs:
   job_id:
@@ -31,7 +30,7 @@ jobs:
 
       - name: Build the Packer
         run: |
-          packer build \
+          packer build -debug \
             -var "port=${{ secrets.PORT }}" \
             -var "mysql_host=${{ secrets.MYSQL_HOST }}" \
             -var "mysql_user=${{ secrets.MYSQL_USER }}" \
