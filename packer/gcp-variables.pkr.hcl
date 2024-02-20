@@ -1,5 +1,5 @@
 variable "project_id" {
-  type = string
+  type    = string
   default = "casye6225-dev"
 }
 
@@ -55,7 +55,6 @@ variable "mysql_user" {
 variable "mysql_password" {
   type        = string
   description = "The password of the mysql"
-  default =""
 }
 
 variable "mysql_database" {
