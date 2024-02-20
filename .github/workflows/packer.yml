@@ -27,13 +27,4 @@ jobs:
         run: zip -r webapp.zip .
 
       - name: Build the Packer
-        run: |
-          packer build -debug \
-            -var "port=${{ secrets.PORT }}" \
-            -var "mysql_host=${{ secrets.MYSQL_HOST }}" \
-            -var "mysql_user=${{ secrets.MYSQL_USER }}" \
-            -var "mysql_password=${{ secrets.MYSQL_PASSWORD }}" \
-            -var "mysql_database=${{ secrets.MYSQL_DATABASE }}" \
-            -var "mysql_port=${{ secrets.MYSQL_PORT }}" \
-            -var "mysql_root_password=${{ secrets.MYSQL_PASSWORD }}" \
-            ./packer/*pkr.hcl
+        run: packer build -debug -var "port=${{ secrets.PORT }}" -var "mysql_host=${{ secrets.MYSQL_HOST }}" -var "mysql_user=${{ secrets.MYSQL_USER }}" -var "mysql_password=${{ secrets.MYSQL_PASSWORD }}" -var "mysql_database=${{ secrets.MYSQL_DATABASE }}" -var "mysql_port=${{ secrets.MYSQL_PORT }}" -var "mysql_root_password=${{ secrets.MYSQL_PASSWORD }}" ./packer/*pkr.hcl
