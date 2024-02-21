@@ -20,3 +20,5 @@ EOF
 
 # start the application
 # npm start
+
+sudo systemctl daemon-reload
