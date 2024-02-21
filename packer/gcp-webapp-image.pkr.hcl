@@ -10,7 +10,7 @@ packer {
 
 // get the latest centos 8 base image
 source "googlecompute" "centos-8" {
-  image_name          = "webapp-custom-image-1"
+  image_name          = var.source_image_name
   project_id          = var.project_id
   source_image_family = var.source_image_family
   zone                = var.zone
@@ -27,13 +27,6 @@ build {
     ]
   }
 
-
-  provisioner "file" {
-    source      = "./system-service-files/webapp.service"
-    destination = "/tmp/webapp.service"
-
-  }
-
   #transfer the web app code to the instance
   provisioner "file" {
     source      = "webapp.zip"
@@ -43,6 +36,12 @@ build {
 
   provisioner "shell" {
     script = "./scripts/web-app-setup.sh"
+  }
+
+  provisioner "file" {
+    source      = "./system-service-files/webapp.service"
+    destination = "/tmp/"
+
   }
 
   provisioner "shell" {
@@ -62,10 +61,6 @@ build {
   # create user and group
   provisioner "shell" {
     script = "./scripts/user-group-setup.sh"
-  }
-  provisioner "file" {
-    source      = "./system-service-files/webapp.service"
-    destination = "/tmp/"
   }
 
   provisioner "shell" {

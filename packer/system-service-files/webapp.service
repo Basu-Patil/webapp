@@ -4,11 +4,13 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/node ~/projects/webapp/server.js
+WorkingDirectory=/home/patilbasavaraj293/projects/webapp/
+ExecStart=/usr/bin/node /home/patilbasavaraj293/projects/webapp/server.js
 Restart=always
+RestartSec=5
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=nodejs-webapp
+SyslogIdentifier=csye6225
 User=csye6225
 Group=csye6225
 

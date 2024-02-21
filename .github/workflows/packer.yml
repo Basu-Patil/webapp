@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: 'main'
 
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
@@ -21,30 +19,24 @@ jobs:
     
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
-      
-      - name: Setup `packer`
-        uses: hashicorp/setup-packer@main
-        id: setup
-        with:
-          version: ${{ env.PRODUCT_VERSION }}
     
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
 
       - name: Zip webapp
         run: zip -r webapp.zip .
+      
+      - name: Setup HashiCorp Packer
+        uses: hashicorp/setup-packer@v3.0.0
+      
+      - name: Initialize Packer template
+        run: packer init packer/
 
-      - name: cat pkr.hcl
-        run: cat ./packer/*pkr.hcl
-      
-      - name: format packer
-        run: packer fmt ./packer/*pkr.hcl
-      
-      - name: init packer
-        run: packer init ./packer/*pkr.hcl
-      
-      - name: validate packer
-        run: packer validate ./packer/*pkr.hcl
+      - name: Validate Packer template
+        run: packer validate packer/
+
+      - name: Format Packer template
+        run: packer fmt packer/ --var "mysql_password=${{ secrets.MYSQL_PASSWORD }}"
 
       - name: Build the Packer
-        run: packer build -debug -var "mysql_password=${{ secrets.MYSQL_PASSWORD }}" ./packer/*pkr.hcl
+        run: packer build --var "mysql_password=${{ secrets.MYSQL_PASSWORD }}" packer/
