@@ -13,6 +13,18 @@ variable account_file_json_key{
 
 }
 
+variable "ssh_username"{
+  type = string
+  default = "patilbasavaraj293"
+
+}
+
+variable "disable_default_service_account" {
+  type        = bool
+  description = "Disable the default service account"
+  default     = true
+}
+
 variable "source_image_name" {
   type        = string
   description = "The source image name"
