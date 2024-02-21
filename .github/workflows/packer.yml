@@ -1,10 +1,13 @@
 name: Create custom image
 
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types: [closed]
+
 on:
-  pull_request:
-    branches:
-      - main
-    types: [closed]
+  push:
       
 
 env:
@@ -29,6 +32,12 @@ jobs:
       
       - name: 'Go one directory up'
         run: cd ..
+      
+      - name: list files
+        run: ls -l
+      
+      - name: pwd
+        run: pwd
 
       - name: Zip webapp
         run: zip -r webapp.zip webapp
