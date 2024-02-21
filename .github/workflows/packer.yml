@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+    types: [closed]
+      
 
 env:
   PRODUCT_VERSION: "1.8.6" # or: "latest"
