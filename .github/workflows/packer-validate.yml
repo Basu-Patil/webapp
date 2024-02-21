@@ -20,7 +20,7 @@ jobs:
               run: packer init packer/
 
             - name: Validate Packer template
-              run: packer validate packer/
+              run: packer validate packer/ --var mysql_password=${{ secrets.MYSQL_PASSWORD }}
 
             - name: Format Packer template
               run: packer fmt packer/
