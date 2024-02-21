@@ -26,4 +26,4 @@ jobs:
               env:
                 MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
                 ACCOUNT_FILE: ${{ secrets.GCP_CREDENTIALS }}
-              run: packer validate --var mysql_password=$MYSQL_PASSWORD --var account_file_json_key=$ACCOUNT_FILE packer/
+              run: packer validate --var "mysql_password=$MYSQL_PASSWORD" --var "account_file_json_key=$ACCOUNT_FILE" packer/
