@@ -21,7 +21,7 @@ source "googlecompute" "centos-8" {
 build {
   sources = ["source.googlecompute.centos-8"]
   provisioner "shell" {
-    script = "./scripts/initial-setup.sh"
+    script = "/packer/scripts/initial-setup.sh"
     environment_vars = [
       "MYSQL_PASSWORD=${var.mysql_password}"
     ]
@@ -35,17 +35,17 @@ build {
   }
 
   provisioner "shell" {
-    script = "./scripts/web-app-setup.sh"
+    script = "packer/scripts/web-app-setup.sh"
   }
 
   provisioner "file" {
-    source      = "./system-service-files/webapp.service"
+    source      = "packer/system-service-files/webapp.service"
     destination = "/tmp/"
 
   }
 
   provisioner "shell" {
-    script = "./scripts/post-deploy-setup.sh"
+    script = "packer/scripts/post-deploy-setup.sh"
     environment_vars = [
       "PORT=${var.port}",
       "MYSQL_HOST=${var.mysql_host}",
@@ -60,11 +60,11 @@ build {
 
   # create user and group
   provisioner "shell" {
-    script = "./scripts/user-group-setup.sh"
+    script = "packer/scripts/user-group-setup.sh"
   }
 
   provisioner "shell" {
-    script = "./scripts/systemd-setup.sh"
+    script = "packer/scripts/systemd-setup.sh"
   }
 
 }
