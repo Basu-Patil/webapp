@@ -8,13 +8,13 @@ variable "zone" {
   default = "us-east1-b"
 }
 
-variable account_file_json_key{
+variable account_file_json_key {
   type = string
 
 }
 
-variable "ssh_username"{
-  type = string
+variable "ssh_username" {
+  type    = string
   default = "patilbasavaraj293"
 
 }
