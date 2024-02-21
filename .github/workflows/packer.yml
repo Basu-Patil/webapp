@@ -26,6 +26,9 @@ jobs:
     
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
+      
+      - name: 'Go one directory up'
+        run: cd ..
 
       - name: Zip webapp
         run: zip -r webapp.zip webapp
