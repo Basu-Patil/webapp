@@ -30,15 +30,12 @@ jobs:
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
       
-      - name: 'Go one directory up'
-        run: cd ..
+      - name: 'create webapp directory'
+        run: mkdir webapp
       
-      - name: list files
-        run: ls -l
-      
-      - name: pwd
-        run: pwd
-
+      - name: 'move files to webapp'
+        run: mv * webapp/
+        
       - name: Zip webapp
         run: zip -r webapp.zip webapp
       
