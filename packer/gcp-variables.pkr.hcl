@@ -10,6 +10,7 @@ variable "zone" {
 
 variable account_file_json_key {
   type = string
+  default = ""
 
 }
 
@@ -28,7 +29,7 @@ variable "disable_default_service_account" {
 variable "source_image_name" {
   type        = string
   description = "The source image name"
-  default     = "custom-image-success-github"
+  default     = "custom-image-success-local"
 
 }
 
