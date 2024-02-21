@@ -29,7 +29,7 @@ variable "disable_default_service_account" {
 variable "source_image_name" {
   type        = string
   description = "The source image name"
-  default     = "custom-image-success-local"
+  default     = "custom-image-success-cloud"
 
 }
 
