@@ -29,15 +29,9 @@ jobs:
     
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
-      
-      - name: 'create webapp directory'
-        run: mkdir webapp
-      
-      - name: 'move files to webapp'
-        run: mv * webapp/
-        
+
       - name: Zip webapp
-        run: zip -r webapp.zip webapp
+        run: zip -r webapp.zip .
       
       - name: Setup HashiCorp Packer
         uses: hashicorp/setup-packer@v3.0.0

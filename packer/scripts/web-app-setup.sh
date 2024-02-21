@@ -14,9 +14,9 @@ mkdir -p ~/projects/
 cd ~/projects/
 
 #unzip the file file from the /tmp directory to the project directory
-unzip /tmp/webapp.zip -d ~/projects/webapp/
+unzip /tmp/webapp.zip -d ~/projects/
 
-cd ~/projects/webapp/
+cd ~/projects/
 
 #npm install
 sudo npm install

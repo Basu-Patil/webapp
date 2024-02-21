@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/patilbasavaraj293/projects/webapp/
-ExecStart=/usr/bin/node /home/patilbasavaraj293/projects/webapp/server.js
+WorkingDirectory=/home/patilbasavaraj293/projects/
+ExecStart=/usr/bin/node /home/patilbasavaraj293/projects/server.js
 Restart=always
 RestartSec=5
 StandardOutput=syslog
