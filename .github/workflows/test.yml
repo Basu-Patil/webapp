@@ -23,11 +23,6 @@ jobs:
         - name: Start MySQL
           run: | 
             sudo /etc/init.d/mysql start
-            
-      
-        # - name: Change MySQL root password
-        #   run: |
-        #     sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${{ secrets.MYSQL_PASSWORD }}';"
         
   
         - name: Run Integration Tests
