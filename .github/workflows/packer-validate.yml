@@ -25,4 +25,5 @@ jobs:
             - name: Validate Packer template
               env:
                 MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-              run: packer validate --var mysql_password=$MYSQL_PASSWORD packer/
+                ACCOUNT_FILE: ${{ secrets.GCP_CREDENTIALS }}
+              run: packer validate --var mysql_password=$MYSQL_PASSWORD --var account_file_json_key=$ACCOUNT_FILE packer/
