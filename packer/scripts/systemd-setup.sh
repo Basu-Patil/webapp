@@ -12,8 +12,8 @@ sudo systemctl daemon-reload
 sudo systemctl enable webapp.service
 
 #show the user and group of the /webapp directory
-ls -l ~/projects/webapp
+sudo ls -l ~/projects/webapp
 # print the user and group of the /webapp directory
-stat ~/projects/webapp
+sudo stat ~/projects/webapp
 
 
