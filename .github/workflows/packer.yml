@@ -34,6 +34,9 @@ jobs:
         
       - name: Format Packer template
         run: packer fmt packer/
+      
+      - name: echo present working directory
+        run: pwd
 
       - name: Validate Packer template
         env:
