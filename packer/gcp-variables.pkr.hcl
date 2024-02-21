@@ -8,6 +8,13 @@ variable "zone" {
   default = "us-east1-b"
 }
 
+variable "source_image_name" {
+  type        = string
+  description = "The source image name"
+  default     = "custom-image-success"
+
+}
+
 variable "source_image_family" {
   type        = string
   description = "The source image family"
@@ -55,6 +62,7 @@ variable "mysql_user" {
 variable "mysql_password" {
   type        = string
   description = "The password of the mysql"
+  default     = "root"
 }
 
 variable "mysql_database" {
