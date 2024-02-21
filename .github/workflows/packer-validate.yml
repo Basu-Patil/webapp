@@ -15,6 +15,9 @@ jobs:
             
             - name: Setup HashiCorp Packer
               uses: hashicorp/setup-packer@v3.0.0
+            
+            - name: Zip webapp
+              run: zip -r webapp.zip .
         
             - name: Initialize Packer template
               run: packer init packer/
