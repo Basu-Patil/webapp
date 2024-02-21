@@ -2,7 +2,7 @@
 # ---------------------------------------Post Deploy Setup---------------------------------------
 
 # go to the project directory
-cd ~/projects/webapp/
+cd ~/projects/
 
 # create a .env file
 touch .env
