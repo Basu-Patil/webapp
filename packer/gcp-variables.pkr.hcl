@@ -11,7 +11,7 @@ variable "zone" {
 variable "source_image_name" {
   type        = string
   description = "The source image name"
-  default     = "custom-image-success"
+  default     = "custom-image-success-github"
 
 }
 
