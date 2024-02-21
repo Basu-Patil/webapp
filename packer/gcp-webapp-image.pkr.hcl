@@ -21,7 +21,7 @@ source "googlecompute" "centos-8" {
 build {
   sources = ["source.googlecompute.centos-8"]
   provisioner "shell" {
-    script = "/packer/scripts/initial-setup.sh"
+    script = "packer/scripts/initial-setup.sh"
     environment_vars = [
       "MYSQL_PASSWORD=${var.mysql_password}"
     ]
@@ -68,3 +68,4 @@ build {
   }
 
 }
+
