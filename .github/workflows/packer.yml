@@ -28,7 +28,7 @@ jobs:
         run: 'gcloud info'
 
       - name: Zip webapp
-        run: zip -r webapp.zip .
+        run: zip -r webapp.zip webapp
       
       - name: Setup HashiCorp Packer
         uses: hashicorp/setup-packer@v3.0.0

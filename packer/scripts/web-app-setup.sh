@@ -8,10 +8,10 @@
 # zip -r /tmp/webapp.zip ../webapp/
 
 #create projects directory
-mkdir -p ~/projects/webapp
+mkdir -p ~/projects/
 
 # go to the project directory
-cd ~/projects/webapp/
+cd ~/projects/
 
 #unzip the file file from the /tmp directory to the project directory
 unzip /tmp/webapp.zip -d ~/projects/webapp/
