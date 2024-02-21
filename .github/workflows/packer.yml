@@ -33,10 +33,10 @@ jobs:
         run: packer init packer/
 
       - name: Validate Packer template
-        run: packer validate packer/
+        run: packer validate packer/ --var mysql_password=${{ secrets.MYSQL_PASSWORD }}
 
       - name: Format Packer template
-        run: packer fmt packer/ --var "mysql_password=${{ secrets.MYSQL_PASSWORD }}"
+        run: packer fmt packer/
 
       - name: Build the Packer
         run: packer build --var "mysql_password=${{ secrets.MYSQL_PASSWORD }}" packer/
