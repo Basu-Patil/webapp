@@ -15,6 +15,8 @@ source "googlecompute" "centos-8" {
   source_image_family = var.source_image_family
   zone                = var.zone
   disable_default_service_account = true
+  ssh_username = "centos"
+  account_file = var.account_file_json_key
 }
 
 // create a new instance from the base image

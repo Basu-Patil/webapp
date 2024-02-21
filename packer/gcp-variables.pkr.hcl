@@ -8,6 +8,11 @@ variable "zone" {
   default = "us-east1-b"
 }
 
+variable account_file_json_key{
+  type = string
+
+}
+
 variable "source_image_name" {
   type        = string
   description = "The source image name"
