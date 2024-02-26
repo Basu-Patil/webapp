@@ -1,7 +1,7 @@
-#variable "project_id" {
-#  type    = string
-#  default = "casye6225-dev"
-#}
+variable "project_id" {
+  type    = string
+  default = "casye6225-dev"
+}
 
 variable "zone" {
   type    = string
