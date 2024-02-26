@@ -1,14 +1,15 @@
 #!/bin/bash
 # ---------------------------------------Post Deploy Setup---------------------------------------
 
+echo "Post Deploy Setup started"
 # go to the project directory
-cd ~/projects/
+cd /opt/projects/webapp
 
 # create a .env file
-touch .env
+sudo touch .env
 
 # write the environment variables to the .env file, take values from the packer template
-cat <<EOF > .env
+cat <<EOF | sudo tee .env
 PORT=${PORT}
 MYSQL_HOST=${MYSQL_HOST}
 MYSQL_USER=${MYSQL_USER}
@@ -22,3 +23,5 @@ EOF
 # npm start
 
 sudo systemctl daemon-reload
+
+echo "Post Deploy Setup completed"
