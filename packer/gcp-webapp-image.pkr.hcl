@@ -9,7 +9,7 @@ packer {
 }
 
 // get the latest centos 8 base image
-source "googlecompute" "centos-8"    {
+source "googlecompute" "centos-8" {
   image_name                      = var.source_image_name
   project_id                      = var.project_id
   source_image_family             = var.source_image_family

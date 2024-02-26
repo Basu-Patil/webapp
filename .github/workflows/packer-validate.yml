@@ -23,7 +23,7 @@ jobs:
               run: packer init packer/
 
             - name: Format Packer template
-              run: packer fmt packer/
+              run: packer fmt -check packer/
       
             - name: Validate Packer template
               env:
