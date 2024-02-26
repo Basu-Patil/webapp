@@ -1,22 +1,16 @@
 #!/bin/bash
 
-#install zip
-
-# sudo dnf install zip -y
-
-# create a zip file of the webapp directory
-# zip -r /tmp/webapp.zip ../webapp/
-
+echo "Web App Setup started"
 #create projects directory
-mkdir -p ~/projects/
+sudo mkdir /opt/projects
 
 # go to the project directory
-cd ~/projects/
+cd /opt/projects/
 
 #unzip the file file from the /tmp directory to the project directory
-unzip /tmp/webapp.zip -d ~/projects/
-
-cd ~/projects/
+unzip /tmp/webapp.zip -d /opt/projects/
 
 #npm install
-sudo npm install
+cd /opt/projects/webapp && sudo npm install
+
+echo "Web App Setup completed"

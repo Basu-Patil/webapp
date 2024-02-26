@@ -4,6 +4,8 @@
 # update centos
 # sudo dnf update -y
 
+echo "Initial Setup started"
+
 # enable latest nodejs
 sudo dnf module enable nodejs:20 -y
 
@@ -32,6 +34,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';
 exit
 EOF
 
+echo "Initial Setup completed"
 # #install zip
 # sudo dnf install zip -y
 

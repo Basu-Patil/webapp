@@ -9,7 +9,7 @@ variable "zone" {
 }
 
 variable account_file_json_key {
-  type = string
+  type    = string
   default = ""
 
 }
@@ -80,6 +80,7 @@ variable "mysql_user" {
 variable "mysql_password" {
   type        = string
   description = "The password of the mysql"
+  default     = "root"
 }
 
 variable "mysql_database" {
