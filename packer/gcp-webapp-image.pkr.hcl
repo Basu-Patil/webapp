@@ -45,19 +45,19 @@ build {
 
   }
 
-  provisioner "shell" {
-    script = "packer/scripts/post-deploy-setup.sh"
-    environment_vars = [
-      "PORT=${var.port}",
-      "MYSQL_HOST=${var.mysql_host}",
-      "MYSQL_USER=${var.mysql_user}",
-      "MYSQL_PASSWORD=${var.mysql_password}",
-      "MYSQL_DATABASE=${var.mysql_database}",
-      "DIALECT=${var.dialect}",
-      "MYSQL_PORT=${var.mysql_port}"
-    ]
+  // provisioner "shell" {
+  //   script = "packer/scripts/post-deploy-setup.sh"
+  //   environment_vars = [
+  //     "PORT=${var.port}",
+  //     "MYSQL_HOST=${var.mysql_host}",
+  //     "MYSQL_USER=${var.mysql_user}",
+  //     "MYSQL_PASSWORD=${var.mysql_password}",
+  //     "MYSQL_DATABASE=${var.mysql_database}",
+  //     "DIALECT=${var.dialect}",
+  //     "MYSQL_PORT=${var.mysql_port}"
+  //   ]
 
-  }
+  // }
 
   # create user and group
   provisioner "shell" {
