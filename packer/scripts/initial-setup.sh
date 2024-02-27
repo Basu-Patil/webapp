@@ -20,13 +20,13 @@ sudo dnf install npm -y
 sudo dnf install unzip -y
 
 #install mysql
-sudo dnf install mysql-server -y
+# sudo dnf install mysql-server -y
 
-#enable mysql
-sudo systemctl enable mysqld
+# #enable mysql
+# sudo systemctl enable mysqld
 
-#start mysql
-sudo systemctl start mysqld
+# #start mysql
+# sudo systemctl start mysqld
 
 # Try connecting to mysql if it is working
 mysql -u root <<EOF
@@ -35,11 +35,6 @@ exit
 EOF
 
 echo "Initial Setup completed"
-# #install zip
-# sudo dnf install zip -y
-
-# #zip the webapp directory
-# zip -r ./webapp.zip ../../../webapp/
 
 
 
