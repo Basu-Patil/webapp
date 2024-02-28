@@ -1,5 +1,6 @@
 [Unit]
 Description=Node.js Web Application
+conditionPathExists=/opt/projects/webapp/.env
 After=network.target
 
 
