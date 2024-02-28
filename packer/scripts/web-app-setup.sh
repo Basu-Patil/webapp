@@ -5,10 +5,10 @@ echo "Web App Setup started"
 sudo mkdir /opt/projects
 
 # go to the project directory
-cd /opt/projects/
+cd /tmp/
 
 #unzip the file file from the /tmp directory to the project directory
-unzip /tmp/webapp.zip -d /opt/projects/
+sudo unzip webapp.zip -d /opt/projects
 
 #npm install
 cd /opt/projects/webapp && sudo npm install

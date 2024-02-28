@@ -19,21 +19,6 @@ sudo dnf install npm -y
 #install unzip
 sudo dnf install unzip -y
 
-#install mysql
-# sudo dnf install mysql-server -y
-
-# #enable mysql
-# sudo systemctl enable mysqld
-
-# #start mysql
-# sudo systemctl start mysqld
-
-# Try connecting to mysql if it is working
-mysql -u root <<EOF
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';
-exit
-EOF
-
 echo "Initial Setup completed"
 
 

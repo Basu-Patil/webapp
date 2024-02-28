@@ -1,6 +1,6 @@
 variable "project_id" {
   type    = string
-  default = "casye6225-dev"
+  default = "csye6225-413706"
 }
 
 variable "zone" {
@@ -29,7 +29,7 @@ variable "disable_default_service_account" {
 variable "source_image_name" {
   type        = string
   description = "The source image name"
-  default     = "custom-image-success-cloud"
+  default     = "custom-image-success-cloud-2"
 
 }
 
