@@ -8,7 +8,7 @@ sudo mkdir -p /opt/projects/webapp
 cd /tmp/
 
 #unzip the file file from the /tmp directory to the project directory
-sudo unzip webapp.zip -d /opt/projects
+sudo unzip webapp.zip -d /opt/projects/webapp
 
 #npm install
 cd /opt/projects/webapp && sudo npm install
