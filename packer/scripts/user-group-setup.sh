@@ -6,7 +6,7 @@ sudo groupadd csye6225
 
 sudo useradd -g csye6225 -s /sbin/nologin csye6225
 
-sudo chown -R csye6225 /opt/projects/webapp
+sudo chown -R csye6225:csye6225 /opt/projects/webapp
 
 
 # # change the ownership of the /webapp directory to the csye6225 user and group

@@ -53,3 +53,7 @@ npm run dev_start //if you want to start using nodemon
 
 ### Testing
 Under the test folder, you'll find test files that can be used for testing the Web App API. These tests cover various aspects of the API's functionality and can be run using testing frameworks like chai, supertest and Mocha.
+
+### API Enabled
+Enable Network Management API - SQL Connectivity test requires Network Management API.
+Service Networking API - To Setup private services access in VPC.
