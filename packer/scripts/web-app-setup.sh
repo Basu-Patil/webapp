@@ -2,7 +2,7 @@
 
 echo "Web App Setup started"
 #create projects directory
-sudo mkdir /opt/projects
+sudo mkdir -p /opt/projects/webapp
 
 # go to the project directory
 cd /tmp/
