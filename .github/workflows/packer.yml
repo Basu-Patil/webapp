@@ -47,22 +47,20 @@ jobs:
 
       - name: Validate Packer template
         env:
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           ACCOUNT_FILE: ${{ secrets.GCP_CREDENTIALS }}
           SOURCE_IMAGE_FAMILY : ${{ secrets.SOURCE_IMAGE_FAMILY }}
           SOURCE_IMAGE_NAME : ${{ secrets.SOURCE_IMAGE_NAME }}
           SSH_USERNAME : ${{ secrets.SSH_USERNAME }}
           ZONE : ${{ secrets.ZONE }}
           PROJECT_ID : ${{ secrets.PROJECT_ID }}
-        run: packer validate --var "mysql_password=$MYSQL_PASSWORD" --var "account_file_json_key=$ACCOUNT_FILE" --var "source_image_family=$SOURCE_IMAGE_FAMILY" --var "source_image_name=$SOURCE_IMAGE_NAME" --var "ssh_username=$SSH_USERNAME" --var "zone=$ZONE" --var "project_id=$PROJECT_ID" packer/
+        run: packer validate --var "account_file_json_key=$ACCOUNT_FILE" --var "source_image_family=$SOURCE_IMAGE_FAMILY" --var "source_image_name=$SOURCE_IMAGE_NAME" --var "ssh_username=$SSH_USERNAME" --var "zone=$ZONE" --var "project_id=$PROJECT_ID" packer/
 
       - name: Build the Packer
         env:
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           ACCOUNT_FILE: ${{ secrets.GCP_CREDENTIALS }}
           SOURCE_IMAGE_FAMILY : ${{ secrets.SOURCE_IMAGE_FAMILY }}
           SOURCE_IMAGE_NAME : ${{ secrets.SOURCE_IMAGE_NAME }}
           SSH_USERNAME : ${{ secrets.SSH_USERNAME }}
           ZONE : ${{ secrets.ZONE }}
           PROJECT_ID : ${{ secrets.PROJECT_ID }}
-        run: packer build --var "mysql_password=$MYSQL_PASSWORD" --var "account_file_json_key=$ACCOUNT_FILE" --var "source_image_family=$SOURCE_IMAGE_FAMILY" --var "source_image_name=$SOURCE_IMAGE_NAME" --var "ssh_username=$SSH_USERNAME" --var "zone=$ZONE" --var "project_id=$PROJECT_ID" packer/
+        run: packer build --var "account_file_json_key=$ACCOUNT_FILE" --var "source_image_family=$SOURCE_IMAGE_FAMILY" --var "source_image_name=$SOURCE_IMAGE_NAME" --var "ssh_username=$SSH_USERNAME" --var "zone=$ZONE" --var "project_id=$PROJECT_ID" packer/
