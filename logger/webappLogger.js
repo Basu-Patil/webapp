@@ -13,7 +13,7 @@ const webappLogger = createLogger({
         json()
     ),
     transports: [
-        new transports.Console(),// .File({ filename: '/var/log/webapp/webapp.log', level: 'debug' }),
+        new transports.File({ filename: '/var/log/webapp/webapp.log', level: 'debug' }),
     ],
 })
 

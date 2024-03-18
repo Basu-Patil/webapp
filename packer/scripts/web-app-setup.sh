@@ -14,3 +14,6 @@ sudo unzip webapp.zip -d /opt/projects/webapp
 cd /opt/projects/webapp && sudo npm install
 
 echo "Web App Setup completed"
+
+# create folder for logs
+sudo mkdir -p /var/log/webapp
