@@ -16,6 +16,7 @@ source "googlecompute" "centos-8" {
   zone                            = var.zone
   disable_default_service_account = var.disable_default_service_account
   ssh_username                    = var.ssh_username
+  machine_type = var.machine_type
 }
 
 // create a new instance from the base image
