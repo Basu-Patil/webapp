@@ -100,3 +100,9 @@ variable "mysql_port" {
   description = "The port of the mysql"
   default     = 3306
 }
+
+variable "machine_type" {
+  type        = string
+  description = "The machine type"
+  default     = "custom-4-4096"
+}
