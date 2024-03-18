@@ -16,4 +16,4 @@ cd /opt/projects/webapp && sudo npm install
 echo "Web App Setup completed"
 
 # create folder for logs
-sudo mkdir -p /var/log/webapp
+cd /var/log/ && sudo mkdir webapp
