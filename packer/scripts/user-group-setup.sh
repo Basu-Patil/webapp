@@ -8,6 +8,9 @@ sudo useradd -g csye6225 -s /sbin/nologin csye6225
 
 sudo chown -R csye6225:csye6225 /opt/projects/webapp
 
+# change ownership for /var/log/webapp
+sudo chown -R csye6225:csye6225 /var/log/webapp
+
 
 # # change the ownership of the /webapp directory to the csye6225 user and group
 # sudo chown -R csye6225:csye6225 ~/webapp
