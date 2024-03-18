@@ -1,10 +1,16 @@
 import {createLogger, format, transports} from 'winston';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const { combine, timestamp, printf, json } = format;
+
 
 // const webappLogFormat = printf(({ level, message, timestamp }) => {
 //     return `${timestamp} : ${message}`;
 // });
+
+const logDirName = process.env.LOG_DIR_NAME || '/var/log/webapp';
 
 const webappLogger = createLogger({
     level: 'debug',
@@ -13,8 +19,7 @@ const webappLogger = createLogger({
         json()
     ),
     transports: [
-        new transports.File({ filename: '/var/log/webapp/webapp.log', level: 'debug' }),
+        new transports.File({ filename: `${process.env.logDirName}/webapp.log`, level: 'debug' }),
     ],
 })
-
 export default webappLogger;
