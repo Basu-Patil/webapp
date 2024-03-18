@@ -15,5 +15,7 @@ cd /opt/projects/webapp && sudo npm install
 
 echo "Web App Setup completed"
 
+sudo chown -R csye6225:csye6225 /var/log/
+
 # create folder for logs
 cd /var/log/ && sudo mkdir webapp
