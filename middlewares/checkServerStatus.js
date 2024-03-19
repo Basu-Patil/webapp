@@ -1,4 +1,5 @@
 import { sequelize } from "../database/database_connection.js";
+import webappLogger from "../logger/webappLogger.js";
 
 export const healthCheck = async (req, res, next) => {
     try{
