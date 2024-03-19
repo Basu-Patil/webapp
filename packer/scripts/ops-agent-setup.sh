@@ -16,24 +16,29 @@ logging:
     processors:
         my-app-processor:
             type: parse_json
-            severity_key: level
-            severity_override:
-                debug: DEBUG
-                info: INFO
-                notice: NOTICE
-                warning: WARNING
-                error: ERROR
-                crit: CRITICAL
-                alert: ALERT
-                emerg: EMERGENCY
             time_key: time
             time_format: "%Y-%m-%d %H:%M:%S"
+        winston-level-processor:
+            type: modify_fields
+            fields:
+                severity:
+                    move_from: jsonPayload.level
+                    map_values:
+                        "debug": "DEBUG"
+                        "info": "INFO"
+                        "notice": "NOTICE"
+                        "warning": "WARNING"
+                        "error": "ERROR"
+                        "crit": "CRITICAL"
+                        "alert": "ALERT"
+                        "emerg": "EMERGENCY"
+                
         
     service:
         pipelines:
             default_pipeline:
                 receivers: [my-app-receiver]
-                processors: [my-app-processor]
+                processors: [my-app-processor, winston-level-processor]
 EOF
 
 # restart ops agent
