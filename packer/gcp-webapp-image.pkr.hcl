@@ -69,5 +69,9 @@ build {
     script = "packer/scripts/systemd-setup.sh"
   }
 
+  provisioner "shell" {
+    script = "packer/scripts/ops-agent-setup.sh"
+  }
+
 }
 
