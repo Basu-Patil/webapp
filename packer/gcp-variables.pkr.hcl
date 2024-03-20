@@ -5,9 +5,8 @@ variable "project_id" {
 
 variable "zone" {
   type    = string
-  default = "us-east1-b"
+  default = "us-west1-c"
 }
-
 
 variable account_file_json_key {
   type    = string
