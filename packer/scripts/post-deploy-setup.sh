@@ -9,7 +9,7 @@ cd /opt/projects/webapp
 sudo touch .env
 
 # write the environment variables to the .env file, take values from the packer template
-cat <<EOF | sudo tee .env
+cat <<EOF | sudo tee .env > /dev/null
 PORT=${PORT}
 MYSQL_HOST=${MYSQL_HOST}
 MYSQL_USER=${MYSQL_USER}
