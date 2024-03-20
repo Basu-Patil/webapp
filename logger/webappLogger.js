@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const { combine, timestamp, printf, json } = format;
+const { combine, timestamp, json } = format;
 
 
 const webappLogger = createLogger({
