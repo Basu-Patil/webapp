@@ -17,7 +17,7 @@ logging:
         my-app-processor:
             type: parse_json
             time_key: timestamp
-            time_format: "%Y-%m-%d %H:%M:%S"
+            time_format: "%Y-%m-%dT%H:%M:%S.%LZ"
         winston-level-processor:
             type: modify_fields
             fields:

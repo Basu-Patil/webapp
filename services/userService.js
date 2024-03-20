@@ -9,7 +9,7 @@ const hashPassword = async (password) => {
 
 const checkEmptyValues = (user) => {
     if (user.username === '' || user.password === '' || user.first_name === '' || user.last_name === '') {
-        webappLogger.error(`Empty values not allowed for fields: username, password, first_name, last_name`); 
+        webappLogger.warn(`Empty values not allowed for fields: username, password, first_name, last_name`); 
         throw new Error('Empty values not allowed');
     }
 }

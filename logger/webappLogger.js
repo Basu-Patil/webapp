@@ -9,7 +9,7 @@ const { combine, timestamp, json } = format;
 const webappLogger = createLogger({
     level: 'debug',
     format: combine(
-        timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
+        timestamp(),
         json()
     ),
     transports: [],
