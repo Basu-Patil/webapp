@@ -8,6 +8,7 @@ variable "zone" {
   default = "us-east1-b"
 }
 
+
 variable account_file_json_key {
   type    = string
   default = ""
