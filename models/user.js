@@ -36,6 +36,14 @@ const User = sequelize.define('User', {
             notEmpty: true
         }
     },
+    account_verified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    email_sent: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
 },{
     tableName: 'users',
     createdAt: 'account_created',

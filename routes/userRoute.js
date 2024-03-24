@@ -2,6 +2,7 @@ import express from 'express';
 import { createUserController, getUserController, updateUserController } from '../controllers/userController.js';
 import { authenticateUser } from '../middlewares/authentication.js';
 import webappLogger from '../logger/webappLogger.js';
+import { checkAccountVerified } from '../middlewares/checkAccountVerified.js';
 
 const userRouter = express.Router();
 
@@ -13,10 +14,10 @@ userRouter.route('/')
 
 
 userRouter.route('/self')
-    .get(authenticateUser, (req, res) => {
+    .get(checkAccountVerified, authenticateUser, (req, res) => {
         webappLogger.debug(`Received GET request on /user/self`);
         getUserController(req, res);
-    }).put(authenticateUser, (req, res) => {
+    }).put(checkAccountVerified, authenticateUser, (req, res) => {
         webappLogger.debug(`Received PUT request on /user/self`);
         updateUserController(req, res);
     });

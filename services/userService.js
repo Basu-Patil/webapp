@@ -1,6 +1,45 @@
 import { User } from "../models/index.js";
 import bcrypt from 'bcrypt';
 import webappLogger from "../logger/webappLogger.js";
+import jwt from 'jsonwebtoken';
+import { PubSub } from '@google-cloud/pubsub';
+
+
+// const publishMessage = async (message) => {
+//     const pubSubClient = new PubSub({
+//         projectId: "csye6225-413706",
+//     });
+//     const topicName = 'projects/csye6225-413706/topics/verify_email_manual';
+//     console.log(`message: ${JSON.stringify(message)}`)
+//     const dataBuffer = Buffer.from(JSON.stringify(message));
+//     try {
+//         console.log('Entered publishMessage try block')
+//         const messageId = await pubSubClient.topic(topicName).publishMessage(dataBuffer);
+//         console.log(`Message ${messageId} published.`);
+//         return messageId;
+//     } catch (error) {
+//         console.error(`Received error while publishing: ${error.message}`);
+//         throw new Error(error.message);
+//     }
+// }
+
+const pubSubClient = new PubSub({
+            projectId: "csye6225-413706",
+        });
+async function publishMessage(topicNameOrId, data) {
+    // Publishes the message as a string, e.g. "Hello, world!" or JSON.stringify(someObject)
+    const dataBuffer = Buffer.from(JSON.stringify(data));
+  
+    try {
+      const messageId = await pubSubClient
+        .topic(topicNameOrId)
+        .publishMessage({data: dataBuffer});
+      console.log(`Message ${messageId} published.`);
+    } catch (error) {
+      console.error(`Received error while publishing: ${error.message}`);
+      process.exitCode = 1;
+    }
+  }
 
 const hashPassword = async (password) => {
     const saltOrRounds = 10;
@@ -32,6 +71,19 @@ export const createUser = async (user) => {
             last_name
         });
         webappLogger.info(`User created with username: ${newuser.username}`);
+        //generate token and send email with 2 min expiry
+        const token = jwt.sign({ username: newuser.username }, process.env.JWT_SECRET, { expiresIn: '2m' });
+        const webappUrl = process.env.WEBAPP_URL || 'http://localhost:8080';
+        const message = {
+            toAddress: username,
+            subject: 'Verify your account',
+            link: `${webappUrl}/verify?token=${token}`,
+            fullName: `${first_name} ${last_name}`
+        }
+        const msgId = await publishMessage('projects/csye6225-413706/topics/verify_email_manual',message);
+        console.log(`Message published with ID: ${msgId}`);
+        webappLogger.info(`Email sent to user: ${newuser.username}`);
+
         return User.scope('withoutPassword').findOne({ where: { username: newuser.username } });
     }
     catch (error) {
