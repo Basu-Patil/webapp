@@ -15,7 +15,7 @@ const webappLogger = createLogger({
     transports: [],
 })
 
-if(process.env.NODE_ENV === 'test'){
+if(process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'local'){
     webappLogger.add( new transports.Console());
 }
 else{
