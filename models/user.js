@@ -50,7 +50,7 @@ const User = sequelize.define('User', {
     updatedAt: 'account_updated',
     scopes:{
         withoutPassword: {
-            attributes: {exclude: ['password']}
+            attributes: {exclude: ['password', 'email_sent', 'account_verified']}
         },
         withoutId:{
             attributes: {exclude: ['id']}
