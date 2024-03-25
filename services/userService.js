@@ -74,11 +74,20 @@ export const createUser = async (user) => {
         //generate token and send email with 2 min expiry
         const token = jwt.sign({ username: newuser.username }, process.env.JWT_SECRET, { expiresIn: '2m' });
         const webappUrl = process.env.WEBAPP_URL || 'http://localhost:8080';
+        const database_details = {
+            mysql_host: process.env.MYSQL_HOST,
+            mysql_user: process.env.MYSQL_USER,
+            mysql_password: process.env.MYSQL_PASSWORD,
+            mysql_database: process.env.MYSQL_DATABASE
+        }
+
         const message = {
             toAddress: username,
             subject: 'Verify your account',
             link: `${webappUrl}/verify?token=${token}`,
-            fullName: `${first_name} ${last_name}`
+            fullName: `${first_name} ${last_name}`,
+            database_details: database_details
+
         }
         const msgId = await publishMessage('projects/csye6225-413706/topics/verify_email_manual',message);
         console.log(`Message published with ID: ${msgId}`);

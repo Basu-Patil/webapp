@@ -8,10 +8,10 @@ export const verifyUser = async (token) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findOne({ where: { username: decoded.username } });
-        // if(user.email_sent === false){
-        //     webappLogger.error(`Email not sent to user: ${decoded.username}`);
-        //     throw new Error('Invalid link.');
-        // }
+        if(user.email_sent === false){
+            webappLogger.error(`Email not sent to user: ${decoded.username}`);
+            throw new Error('Invalid link.');
+        }
         if (user) {
             user.account_verified = true;
             await user.save();
