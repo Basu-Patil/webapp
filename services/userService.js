@@ -1,9 +1,9 @@
 import { User } from "../models/index.js";
 import bcrypt from 'bcrypt';
 import webappLogger from "../logger/webappLogger.js";
-import jwt from 'jsonwebtoken';
 import { PubSub } from '@google-cloud/pubsub';
 import dotenv from 'dotenv';
+import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
@@ -67,21 +67,25 @@ export const createUser = async (user) => {
         
         const hashedPassword = await hashPassword(password);
 
+        const uniqueToken = uuidv4();
+        const expires_at = new Date().getTime() + 120000;
+
         const newuser = await User.create({
             username,
             password: hashedPassword,
             first_name,
-            last_name
+            last_name,
+            expires_at,
+            validation_id: uniqueToken
         });
         webappLogger.info(`User created with username: ${newuser.username}`);
-        //generate token and send email with 2 min expiry
-        const token = jwt.sign({ username: newuser.username }, process.env.JWT_SECRET, { expiresIn: '2m' });
+        
         const webappUrl = process.env.WEBAPP_URL || 'http://localhost';
 
         const message = {
             toAddress: username,
             subject: 'Verify your account',
-            link: `${webappUrl}:${process.env.PORT}/verify?token=${token}`,
+            link: `${webappUrl}:${process.env.PORT}/verify?token=${uniqueToken}&username=${username}`,
             fullName: `${first_name} ${last_name}`
         }
         const msgId = await publishMessage('projects/csye6225-413706/topics/verify_email_manual',message);
