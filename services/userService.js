@@ -80,15 +80,15 @@ export const createUser = async (user) => {
         });
         webappLogger.info(`User created with username: ${newuser.username}`);
         
-        const webappUrl = process.env.WEBAPP_URL || 'http://localhost';
+        const webappUrl = process.env.WEBAPP_URL || 'localhost';
 
         const message = {
             toAddress: username,
             subject: 'Verify your account',
-            link: `${webappUrl}:${process.env.PORT}/verify?token=${uniqueToken}&username=${username}`,
+            link: `http://${webappUrl}:${process.env.PORT}/verify?token=${uniqueToken}&username=${username}`,
             fullName: `${first_name} ${last_name}`
         }
-        const msgId = await publishMessage('projects/csye6225-413706/topics/verify_email_manual',message);
+        const msgId = await publishMessage('projects/csye6225-413706/topics/functions2-topic',message);
         console.log(`Message published with ID: ${msgId}`);
         webappLogger.info(`Email sent to user: ${newuser.username}`);
 
