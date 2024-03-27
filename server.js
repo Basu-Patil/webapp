@@ -18,7 +18,7 @@ export let server;
 createDatabase()
     .then(() => {
         console.log("Database created successfully");
-        sequelize.sync({force:true})
+        sequelize.sync({alter:true})
             .then(() => {
                 server = app.listen(port, () => console.log(`Server is listening at port ${port}`));
             })

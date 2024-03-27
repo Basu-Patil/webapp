@@ -60,9 +60,9 @@ export const createUser = async (user) => {
     const { username, password, first_name, last_name } = user;
     try {
         checkEmptyValues(user);
-        if((user.id || user.account_created || user.account_updated)){
-            webappLogger.error(`Cannot update username`);
-            throw new Error('Cannot update username');
+        if((user.id || user.account_created || user.account_updated || user.account_verified || user.email_sent)){
+            webappLogger.error(`Cannot update readonly fields, triggered by user: ${user.username}`);
+            throw new Error('Cannot update readonly fields');
         }
         
         const hashedPassword = await hashPassword(password);
@@ -120,7 +120,7 @@ export const updateUser = async (currentuserDetails, updateUserDetails) => {
 
         checkEmptyValues(updateUserDetails);
 
-        if((updateUserDetails.username || updateUserDetails.id || updateUserDetails.account_created || updateUserDetails.account_updated)){
+        if((updateUserDetails.username || updateUserDetails.id || updateUserDetails.account_created || updateUserDetails.account_updated || updateUserDetails.account_verified || updateUserDetails.email_sent)){
             webappLogger.error(`Cannot update username for user: ${currentuserDetails.username}`);
             throw new Error('Cannot update username');
         }

@@ -26,7 +26,7 @@ const userDetails = {
     "username": "testuser@example.com",
     "password": "testpassword",
     "first_name": "test",
-    "last_name": "user"
+    "last_name": "user",
 }
 
 const updatedUserDetails = {
@@ -44,6 +44,8 @@ describe("Success User API Integration Test", () => {
             .send(userDetails);
         
         expect(resp.status).to.equal(201);
+        const user = await User.update({ email_verified: true, account_verified: true },
+                                        { where: { username: userDetails.username } });
     });
 
     // Test 2: Get a user
