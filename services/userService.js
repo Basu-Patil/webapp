@@ -88,7 +88,7 @@ export const createUser = async (user) => {
             link: `http://${webappUrl}:${process.env.PORT}/verify?token=${uniqueToken}&username=${username}`,
             fullName: `${first_name} ${last_name}`
         }
-        const msgId = await publishMessage('projects/csye6225-413706/topics/functions2-topic',message);
+        const msgId = await publishMessage('projects/csye6225-413706/topics/verify_email',message);
         console.log(`Message published with ID: ${msgId}`);
         webappLogger.info(`Email sent to user: ${newuser.username}`);
 
