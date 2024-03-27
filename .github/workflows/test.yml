@@ -36,6 +36,7 @@ jobs:
             DIALECT: ${{ secrets.DIALECT }}
             MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
             NODE_ENV: 'test'
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
             
             
       
