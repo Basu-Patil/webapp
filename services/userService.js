@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt';
 import webappLogger from "../logger/webappLogger.js";
 import jwt from 'jsonwebtoken';
 import { PubSub } from '@google-cloud/pubsub';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 // const publishMessage = async (message) => {
@@ -73,7 +76,7 @@ export const createUser = async (user) => {
         webappLogger.info(`User created with username: ${newuser.username}`);
         //generate token and send email with 2 min expiry
         const token = jwt.sign({ username: newuser.username }, process.env.JWT_SECRET, { expiresIn: '2m' });
-        const webappUrl = process.env.WEBAPP_URL || 'http://localhost:8080';
+        const webappUrl = process.env.WEBAPP_URL || 'http://localhost';
         const database_details = {
             mysql_host: process.env.MYSQL_HOST,
             mysql_user: process.env.MYSQL_USER,
@@ -84,7 +87,7 @@ export const createUser = async (user) => {
         const message = {
             toAddress: username,
             subject: 'Verify your account',
-            link: `${webappUrl}/verify?token=${token}`,
+            link: `${webappUrl}:${process.env.PORT}/verify?token=${token}`,
             fullName: `${first_name} ${last_name}`,
             database_details: database_details
 
