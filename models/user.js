@@ -44,13 +44,22 @@ const User = sequelize.define('User', {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
+    expires_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    validation_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        unique: true
+    },
 },{
     tableName: 'users',
     createdAt: 'account_created',
     updatedAt: 'account_updated',
     scopes:{
         withoutPassword: {
-            attributes: {exclude: ['password', 'email_sent', 'account_verified']}
+            attributes: {exclude: ['password', 'email_sent', 'account_verified', 'expires_at', 'validation_id']}
         },
         withoutId:{
             attributes: {exclude: ['id']}
