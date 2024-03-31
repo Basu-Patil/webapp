@@ -46,12 +46,11 @@ const User = sequelize.define('User', {
     },
     expires_at: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true
     },
     validation_id: {
         type: DataTypes.UUID,
         allowNull: false,
-        unique: true
     },
 },{
     tableName: 'users',
@@ -64,14 +63,7 @@ const User = sequelize.define('User', {
         withoutId:{
             attributes: {exclude: ['id']}
         }
-    },
-    // indexes:[
-    //     {
-    //         unique: true,
-    //         fields: ['username'],
-    //         name: 'idx_username'
-    //     }
-    // ]
+    }
 });
 
 export default User;
