@@ -68,14 +68,12 @@ export const createUser = async (user) => {
         const hashedPassword = await hashPassword(password);
 
         const uniqueToken = uuidv4();
-        const expires_at = new Date().getTime() + 120000;
 
         const newuser = await User.create({
             username,
             password: hashedPassword,
             first_name,
             last_name,
-            expires_at,
             validation_id: uniqueToken
         });
         webappLogger.info(`User created with username: ${newuser.username}`);
@@ -88,7 +86,7 @@ export const createUser = async (user) => {
             link: `http://${webappUrl}:${process.env.PORT}/verify?token=${uniqueToken}&username=${username}`,
             fullName: `${first_name} ${last_name}`
         }
-        const msgId = await publishMessage('projects/csye6225-413706/topics/verify_email',message);
+        const msgId = await publishMessage(`${process.env.PUBSUB_TOPIC_URL}`,message);
         console.log(`Message published with ID: ${msgId}`);
         webappLogger.info(`Email sent to user: ${newuser.username}`);
 
