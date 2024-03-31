@@ -44,7 +44,7 @@ describe("Success User API Integration Test", () => {
             .send(userDetails);
         
         expect(resp.status).to.equal(201);
-        const user = await User.update({ email_verified: true, account_verified: true },
+        const user = await User.update({ email_verified: true, account_verified: true, expires_at: new Date().getTime()+120000},
                                         { where: { username: userDetails.username } });
     });
 

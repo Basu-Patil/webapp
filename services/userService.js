@@ -8,24 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 dotenv.config();
 
 
-// const publishMessage = async (message) => {
-//     const pubSubClient = new PubSub({
-//         projectId: "csye6225-413706",
-//     });
-//     const topicName = 'projects/csye6225-413706/topics/verify_email_manual';
-//     console.log(`message: ${JSON.stringify(message)}`)
-//     const dataBuffer = Buffer.from(JSON.stringify(message));
-//     try {
-//         console.log('Entered publishMessage try block')
-//         const messageId = await pubSubClient.topic(topicName).publishMessage(dataBuffer);
-//         console.log(`Message ${messageId} published.`);
-//         return messageId;
-//     } catch (error) {
-//         console.error(`Received error while publishing: ${error.message}`);
-//         throw new Error(error.message);
-//     }
-// }
-
 const pubSubClient = new PubSub({
             projectId: "csye6225-413706",
         });

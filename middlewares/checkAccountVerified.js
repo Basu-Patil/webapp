@@ -21,7 +21,7 @@ export const checkAccountVerified = async (req, res, next) => {
         if(user.account_verified === false){
             webappLogger.warn(`User not verified with username: ${auth.username}`);
             console.log(`User not verified with username: ${auth.username}`);
-            return res.status(401).send();
+            return res.status(403).send();
         }
     }
     catch (error) {

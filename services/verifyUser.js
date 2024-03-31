@@ -1,6 +1,5 @@
 import { User } from "../models/index.js";
 import webappLogger from "../logger/webappLogger.js";
-import jwt from 'jsonwebtoken';
 
 // verify user by checking the token and updating the user status
 
@@ -8,7 +7,11 @@ export const verifyUser = async (token, username) => {
     try {
 
         const user = await User.findOne({ where: { username: username } });
-        if(user.email_sent === false || user.validation_id === null){
+        if (!user) {
+            webappLogger.error(`User not found with username: ${username}`);
+            throw new Error('User not found');
+        }
+        if(user?.email_sent === false || user?.validation_id === null){
             webappLogger.error(`Email not sent to user: ${username}`);
             throw new Error('Invalid link.');
         }
