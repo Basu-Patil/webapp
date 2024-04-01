@@ -16,7 +16,8 @@ export const verifyUser = async (token, username) => {
             throw new Error('Invalid link.');
         }
 
-        if (validateUser(user, token)) {
+        const validate = await validateUser(user, token);
+        if (validate) {
             user.account_verified = true;
             await user.save();
             webappLogger.info(`User ${user.username} verified successfully`);
@@ -39,7 +40,7 @@ const validateUser = async (user, token) => {
         webappLogger.error(`Invalid token for user: ${user.username}`);
         throw new Error('Invalid token');
     }
-    if (user.expires_at <= Date.now()) {
+    if (user.expires_at < Date.now()) {
         webappLogger.error(`Token expired for user: ${user.username}`);
         throw new Error('Token expired');
     }
