@@ -73,6 +73,91 @@ jobs:
               -var "project_id=$PROJECT_ID" \
               packer/
           echo NEW_IMAGE=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2) >> $GITHUB_ENV
-          
-      - name: Output new image
-        run: echo "NEW_IMAGE=${{ env.NEW_IMAGE }}"
+
+      - name: Create new instance template
+        id: create-template
+        env:
+          INSTANCE_TEMPLATE_NAME: instance-template-${{ env.NEW_IMAGE }}
+          VM_REGION: ${{ secrets.VM_REGION }}
+          VM_MACHINE_TYPE: ${{ secrets.VM_MACHINE_TYPE }}
+          VM_SERVICE_ACCOUNT_EMAIL: ${{ secrets.VM_SERVICE_ACCOUNT_EMAIL }}
+          VM_SUBNETWORK: ${{ secrets.VM_SUBNETWORK }}
+          VM_NETWORK_TIER: ${{ secrets.VM_NETWORK_TIER }}
+          VM_HTTP_TARGET_TAGS: ${{ secrets.VM_HTTP_TARGET_TAGS }}
+          VM_DB_NAME: ${{ secrets.vm_db_name }}
+          VM_DB_PASSWORD: ${{ secrets.vm_db_password }}
+          VM_DB_USER: ${{ secrets.vm_db_user }}
+          VM_DB_HOST: ${{ secrets.VM_DB_HOST }}
+          DIALECT: ${{ secrets.DIALECT }}
+          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          PUBSUB_TOPIC_NAME: ${{ secrets.PUBSUB_TOPIC_NAME }}
+          APPLICATION_PORT: ${{ secrets.PORT }}
+
+        run: |
+          gcloud config set project ${{ secrets.PROJECT_ID }}
+          gcloud compute instance-templates create $INSTANCE_TEMPLATE_NAME \
+              --project=${{ env.PROJECT_ID }} \
+              --region=${{ env.VM_REGION }} \
+              --instance-template-region=${{ env.VM_REGION }} \
+              --machine-type=${{ env.VM_MACHINE_TYPE }} \
+              --tags=${{ env.VM_HTTP_TARGET_TAGS }} \
+              --service-account=${{ env.VM_SERVICE_ACCOUNT_EMAIL }} \
+              --network-tier=${{ env.VM_NETWORK_TIER }} \
+              --subnet=${{ env.VM_SUBNETWORK }} \
+              --image=${{ env.NEW_IMAGE }} \
+              --boot-disk-type=pd-standard \
+              --metadata=startup-script='#! /bin/bash
+              # go to the project directory and create a .env file
+              cd /opt/projects/webapp
+              
+              # create a .env file
+              sudo touch .env
+              
+              # write the environment variables to the .env file, take values from the terraform output
+              cat <<EOF | sudo tee .env > /dev/null
+              PORT=${{ env.APPLICATION_PORT }}
+              MYSQL_HOST=${{ env.VM_DB_HOST }}
+              MYSQL_USER=${{ env.VM_DB_USER }}
+              MYSQL_PASSWORD=${{ env.VM_DB_PASSWORD }}
+              MYSQL_DATABASE=${{ env.VM_DB_NAME }}
+              DIALECT=${{ env.DIALECT }}
+              MYSQL_PORT=${{ env.MYSQL_PORT }}
+              NODE_ENV="production"
+              WEBAPP_URL = basavarajpatil.me
+              PUBSUB_TOPIC_URL = "projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}"
+              EOF
+              
+              # Reload the systemd manager configuration
+              sudo systemctl daemon-reload'
+
+
+      - name: Set instance template for managed instance group
+        id: set-template
+        env:
+          INSTANCE_TEMPLATE_NAME: instance-template-${{ env.NEW_IMAGE }}
+          INSTANCE_GROUP: ${{ secrets.INSTANCE_GROUP }}
+          REGION: ${{ secrets.INSTACE_GROUP_REGION }}
+        run: |
+          gcloud compute instance-groups managed set-instance-template $INSTANCE_GROUP \
+              --template=$INSTANCE_TEMPLATE_NAME \
+              --region=$REGION
+
+      - name: Start rolling update
+        id: start-update
+        env:
+          INSTANCE_TEMPLATE_NAME: instance-template-${{ env.NEW_IMAGE }}
+          INSTANCE_GROUP: ${{ secrets.INSTANCE_GROUP }}
+          REGION: ${{ secrets.INSTACE_GROUP_REGION }}
+        run: |
+          gcloud compute instance-groups managed rolling-action start-update $INSTANCE_GROUP \
+              --version template=$INSTANCE_TEMPLATE_NAME \
+              --region=$REGION
+
+      - name: Wait for rolling update to complete
+        id: wait-update
+        run: |
+          while [[ $(gcloud compute instance-groups managed list-instance-updates $INSTANCE_GROUP --region=$REGION --filter="status=RUNNING" --format="value(status)") == "RUNNING" ]]; do
+            echo "Update is still running..."
+            sleep 60
+          done
