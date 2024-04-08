@@ -64,4 +64,15 @@ jobs:
           SSH_USERNAME : ${{ secrets.SSH_USERNAME }}
           ZONE : ${{ secrets.ZONE }}
           PROJECT_ID : ${{ secrets.PROJECT_ID }}
-        run: packer build --var "account_file_json_key=$ACCOUNT_FILE" --var "source_image_family=$SOURCE_IMAGE_FAMILY" --var "source_image_name=$SOURCE_IMAGE_NAME" --var "ssh_username=$SSH_USERNAME" --var "zone=$ZONE" --var "project_id=$PROJECT_ID" packer/
+        run: |
+          MACHINE_IMAGE_ID=$(packer build \
+              -var "account_file_json_key=${{ secrets.GCP_CREDENTIALS }}" \
+              -var "source_image_family=${{ secrets.SOURCE_IMAGE_FAMILY }}" \
+              -var "source_image_name=${{ secrets.SOURCE_IMAGE_NAME }}" \
+              -var "ssh_username=${{ secrets.SSH_USERNAME }}" \
+              -var "zone=${{ secrets.ZONE }}" \
+              -var "project_id=${{ secrets.PROJECT_ID }}" \
+              packer/ | awk '/artifact/ {gsub(/\*\*\*/, "custom-webapp-img"); print $NF}')
+            
+          echo "Machine Image ID: $MACHINE_IMAGE_ID"
+      
