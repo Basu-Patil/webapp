@@ -73,5 +73,10 @@ build {
     script = "packer/scripts/ops-agent-setup.sh"
   }
 
+  post-processor "manifest" {
+    output     = "manifest.json"
+    strip_path = true
+  }
+
 }
 

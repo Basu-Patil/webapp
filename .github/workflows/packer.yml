@@ -8,7 +8,6 @@ on:
 
 # on:
 #   push:
-      
 
 env:
   PRODUCT_VERSION: "1.8.6" # or: "latest"
@@ -20,51 +19,51 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v2'
+      - id: "auth"
+        uses: "google-github-actions/auth@v2"
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-    
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
-    
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v2"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
 
       - name: Zip webapp
         run: zip -r webapp.zip .
-      
+
       - name: Setup HashiCorp Packer
         uses: hashicorp/setup-packer@v3.0.0
-      
+
       - name: Initialize Packer template
         run: packer init packer/
-        
+
       - name: Format Packer template
         run: packer fmt -check packer/
-      
+
       - name: echo present working directory
         run: pwd
 
       - name: Validate Packer template
         env:
           ACCOUNT_FILE: ${{ secrets.GCP_CREDENTIALS }}
-          SOURCE_IMAGE_FAMILY : ${{ secrets.SOURCE_IMAGE_FAMILY }}
-          SOURCE_IMAGE_NAME : ${{ secrets.SOURCE_IMAGE_NAME }}
-          SSH_USERNAME : ${{ secrets.SSH_USERNAME }}
-          ZONE : ${{ secrets.ZONE }}
-          PROJECT_ID : ${{ secrets.PROJECT_ID }}
+          SOURCE_IMAGE_FAMILY: ${{ secrets.SOURCE_IMAGE_FAMILY }}
+          SOURCE_IMAGE_NAME: ${{ secrets.SOURCE_IMAGE_NAME }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          ZONE: ${{ secrets.ZONE }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: packer validate --var "account_file_json_key=$ACCOUNT_FILE" --var "source_image_family=$SOURCE_IMAGE_FAMILY" --var "source_image_name=$SOURCE_IMAGE_NAME" --var "ssh_username=$SSH_USERNAME" --var "zone=$ZONE" --var "project_id=$PROJECT_ID" packer/
 
       - name: Build the Packer
         id: packer
         env:
           ACCOUNT_FILE: ${{ secrets.GCP_CREDENTIALS }}
-          SOURCE_IMAGE_FAMILY : ${{ secrets.SOURCE_IMAGE_FAMILY }}
-          SOURCE_IMAGE_NAME : ${{ secrets.SOURCE_IMAGE_NAME }}
-          SSH_USERNAME : ${{ secrets.SSH_USERNAME }}
-          ZONE : ${{ secrets.ZONE }}
-          PROJECT_ID : ${{ secrets.PROJECT_ID }}
+          SOURCE_IMAGE_FAMILY: ${{ secrets.SOURCE_IMAGE_FAMILY }}
+          SOURCE_IMAGE_NAME: ${{ secrets.SOURCE_IMAGE_NAME }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          ZONE: ${{ secrets.ZONE }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           packer build \
               -var "account_file_json_key=$ACCOUNT_FILE" \
@@ -73,12 +72,8 @@ jobs:
               -var "ssh_username=$SSH_USERNAME" \
               -var "zone=$ZONE" \
               -var "project_id=$PROJECT_ID" \
-              packer/ > packer_output.txt
-
-      - name: Extract MACHINE_IMAGE_ID
-        id: extract
-        run: |
-          MACHINE_IMAGE_ID=$(awk '/artifact/ {gsub(/\*\*\*/, "custom-webapp-img"); print $NF}' packer_output.txt)
-          echo "MACHINE_IMAGE_ID=$MACHINE_IMAGE_ID" >> $GITHUB_ENV
-          echo "MACHINE_IMAGE_ID=$MACHINE_IMAGE_ID"
-      
+              packer/
+          echo NEW_IMAGE=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2) >> $GITHUB_ENV
+          
+      - name: Output new image
+        run: echo "NEW_IMAGE=${{ env.NEW_IMAGE }}"
