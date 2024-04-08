@@ -67,12 +67,12 @@ jobs:
           PROJECT_ID : ${{ secrets.PROJECT_ID }}
         run: |
           packer build \
-              -var "account_file_json_key=${{ secrets.GCP_CREDENTIALS }}" \
-              -var "source_image_family=${{ secrets.SOURCE_IMAGE_FAMILY }}" \
-              -var "source_image_name=${{ secrets.SOURCE_IMAGE_NAME }}" \
-              -var "ssh_username=${{ secrets.SSH_USERNAME }}" \
-              -var "zone=${{ secrets.ZONE }}" \
-              -var "project_id=${{ secrets.PROJECT_ID }}" \
+              -var "account_file_json_key=$ACCOUNT_FILE" \
+              -var "source_image_family=$SOURCE_IMAGE_FAMILY" \
+              -var "source_image_name=$SOURCE_IMAGE_NAME" \
+              -var "ssh_username=$SSH_USERNAME" \
+              -var "zone=$ZONE" \
+              -var "project_id=$PROJECT_ID" \
               packer/ > packer_output.txt
 
       - name: Extract MACHINE_IMAGE_ID
