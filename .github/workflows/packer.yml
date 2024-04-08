@@ -80,4 +80,5 @@ jobs:
         run: |
           MACHINE_IMAGE_ID=$(awk '/artifact/ {gsub(/\*\*\*/, "custom-webapp-img"); print $NF}' packer_output.txt)
           echo "MACHINE_IMAGE_ID=$MACHINE_IMAGE_ID" >> $GITHUB_ENV
+          echo "MACHINE_IMAGE_ID=$MACHINE_IMAGE_ID"
       
