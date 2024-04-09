@@ -90,7 +90,7 @@ jobs:
           VM_DB_HOST: ${{ secrets.VM_DB_HOST }}
           DIALECT: ${{ secrets.DIALECT }}
           MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          PROJECT_ID: "csye6225-413706" # ${{ secrets.PROJECT_ID }}
           PUBSUB_TOPIC_NAME: ${{ secrets.PUBSUB_TOPIC_NAME }}
           APPLICATION_PORT: ${{ secrets.PORT }}
 
@@ -125,21 +125,29 @@ jobs:
               sudo touch .env
               
               # write the environment variables to the .env file, take values from the terraform output
-              cat <<EOF | sudo tee .env > /dev/null
-              PORT= ${port}
-              MYSQL_HOST= ${mysql_host}
-              MYSQL_USER= ${mysql_user}
-              MYSQL_PASSWORD= ${mysql_password}
-              MYSQL_DATABASE= ${mysql_database}
-              DIALECT= ${dialect}
-              MYSQL_PORT= ${mysql_port}
-              NODE_ENV="production"
-              WEBAPP_URL = basavarajpatil.me
-              PUBSUB_TOPIC_URL = ${pubsub_topic_url}
-              EOF
-              
-              # Reload the systemd manager configuration
-              sudo systemctl daemon-reload'
+              echo "PORT= ${port}" >> /opt/projects/webapp/.env
+              echo "MYSQL_HOST= ${mysql_host}" >> /opt/projects/webapp/.env
+              echo "MYSQL_USER= ${mysql_user}" >> /opt/projects/webapp/.env
+              echo "MYSQL_PASSWORD= ${mysql_password}" >> /opt/projects/webapp/.env
+              echo "MYSQL_DATABASE= ${mysql_database}" >> /opt/projects/webapp/.env
+              echo "DIALECT= ${dialect}" >> /opt/projects/webapp/.env
+              echo "MYSQL_PORT= ${mysql_port}" >> /opt/projects/webapp/.env
+              echo "NODE_ENV=production" >> /opt/projects/webapp/.env
+              echo "WEBAPP_URL=basavarajpatil.me" >> /opt/projects/webapp/.env
+              echo "PUBSUB_TOPIC_URL=projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}" >> /opt/projects/webapp/.env
+              EOF'
+              # cat <<EOF | sudo tee .env > /dev/null
+              # PORT= ${port}
+              # MYSQL_HOST= ${mysql_host}
+              # MYSQL_USER= ${mysql_user}
+              # MYSQL_PASSWORD= ${mysql_password}
+              # MYSQL_DATABASE= ${mysql_database}
+              # DIALECT= ${dialect}
+              # MYSQL_PORT= ${mysql_port}
+              # NODE_ENV="production"
+              # WEBAPP_URL = basavarajpatil.me
+              # PUBSUB_TOPIC_URL = ${pubsub_topic_url}
+              # EOF'
 
 
       - name: Set instance template for managed instance group
