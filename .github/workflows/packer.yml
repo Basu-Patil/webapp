@@ -108,6 +108,16 @@ jobs:
               --image=${{ env.NEW_IMAGE }} \
               --boot-disk-type=pd-standard \
               --metadata=startup-script='#! /bin/bash
+              port=${{ env.APPLICATION_PORT }}
+              mysql_host=${{ env.VM_DB_HOST }}
+              mysql_user=${{ env.VM_DB_USER }}
+              mysql_password=${{ env.VM_DB_PASSWORD }}
+              mysql_database=${{ env.VM_DB_NAME }}
+              dialect=${{ env.DIALECT }}
+              mysql_port=${{ env.MYSQL_PORT }}
+              node_env="production"
+              webapp_url = basavarajpatil.me
+              pubsub_topic_url = "projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}"
               # go to the project directory and create a .env file
               cd /opt/projects/webapp
               
@@ -116,16 +126,16 @@ jobs:
               
               # write the environment variables to the .env file, take values from the terraform output
               cat <<EOF | sudo tee .env > /dev/null
-              PORT=${{ env.APPLICATION_PORT }}
-              MYSQL_HOST=${{ env.VM_DB_HOST }}
-              MYSQL_USER=${{ env.VM_DB_USER }}
-              MYSQL_PASSWORD=${{ env.VM_DB_PASSWORD }}
-              MYSQL_DATABASE=${{ env.VM_DB_NAME }}
-              DIALECT=${{ env.DIALECT }}
-              MYSQL_PORT=${{ env.MYSQL_PORT }}
+              PORT= ${port}
+              MYSQL_HOST= ${mysql_host}
+              MYSQL_USER= ${mysql_user}
+              MYSQL_PASSWORD= ${mysql_password}
+              MYSQL_DATABASE= ${mysql_database}
+              DIALECT= ${dialect}
+              MYSQL_PORT= ${mysql_port}
               NODE_ENV="production"
               WEBAPP_URL = basavarajpatil.me
-              PUBSUB_TOPIC_URL = "projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}"
+              PUBSUB_TOPIC_URL = ${pubsub_topic_url}
               EOF
               
               # Reload the systemd manager configuration
