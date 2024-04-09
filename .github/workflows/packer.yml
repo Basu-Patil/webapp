@@ -106,6 +106,8 @@ jobs:
               --subnet=${{ env.VM_SUBNETWORK }} \
               --image=${{ env.NEW_IMAGE }} \
               --boot-disk-type=pd-standard \
+              --scopes=https://www.googleapis.com/auth/cloud-platform
+              --disk=interface=scsi
               --metadata=startup-script="#! /bin/bash
                 port=${{ env.APPLICATION_PORT }}
                 mysql_host=${{ env.VM_DB_HOST }}
@@ -137,10 +139,12 @@ jobs:
           INSTANCE_TEMPLATE_NAME: instance-template-${{ env.NEW_IMAGE }}
           INSTANCE_GROUP: ${{ secrets.INSTANCE_GROUP }}
           REGION: ${{ secrets.INSTACE_GROUP_REGION }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
-          gcloud compute instance-groups managed set-instance-template $INSTANCE_GROUP \
-              --template=$INSTANCE_TEMPLATE_NAME \
-              --region=$REGION
+          gcloud compute instance-groups managed set-instance-template ${{env.INSTANCE_GROUP}} \
+              --template=projects/${{env.PROJECT_ID}}/regions/${{env.REGION}}/instanceTemplates/${{env.INSTANCE_TEMPLATE_NAME}} \
+              --region=${{env.REGION}}
+              --project=${{env.PROJECT_ID}}
 
       - name: Start rolling update
         id: start-update
@@ -148,10 +152,12 @@ jobs:
           INSTANCE_TEMPLATE_NAME: instance-template-${{ env.NEW_IMAGE }}
           INSTANCE_GROUP: ${{ secrets.INSTANCE_GROUP }}
           REGION: ${{ secrets.INSTACE_GROUP_REGION }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
-          gcloud compute instance-groups managed rolling-action start-update $INSTANCE_GROUP \
-              --version template=$INSTANCE_TEMPLATE_NAME \
-              --region=$REGION
+          gcloud compute instance-groups managed rolling-action start-update ${{env.INSTANCE_GROUP}} \
+              --version template=projects/${{env.PROJECT_ID}}/regions/${{env.REGION}}/instanceTemplates/${{env.INSTANCE_TEMPLATE_NAME}} \
+              --region=${{env.REGION}}
+              --project=${{env.PROJECT_ID}}
 
       - name: Wait for rolling update to complete
         id: wait-update
