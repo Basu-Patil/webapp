@@ -65,38 +65,8 @@ jobs:
           ZONE: ${{ secrets.ZONE }}
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
-          packer build \
-              -var "account_file_json_key=$ACCOUNT_FILE" \
-              -var "source_image_family=$SOURCE_IMAGE_FAMILY" \
-              -var "ssh_username=$SSH_USERNAME" \
-              -var "zone=$ZONE" \
-              -var "project_id=$PROJECT_ID" \
-              packer/
-          echo NEW_IMAGE=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2) >> $GITHUB_ENV
-
-      - name: Create new instance template
-        id: create-template
-        env:
-          INSTANCE_TEMPLATE_NAME: instance-template-${{ env.NEW_IMAGE }}
-          VM_REGION: ${{ secrets.VM_REGION }}
-          VM_MACHINE_TYPE: ${{ secrets.VM_MACHINE_TYPE }}
-          VM_SERVICE_ACCOUNT_EMAIL: ${{ secrets.VM_SERVICE_ACCOUNT_EMAIL }}
-          VM_SUBNETWORK: ${{ secrets.VM_SUBNETWORK }}
-          VM_NETWORK_TIER: ${{ secrets.VM_NETWORK_TIER }}
-          VM_HTTP_TARGET_TAGS: ${{ secrets.VM_HTTP_TARGET_TAGS }}
-          VM_DB_NAME: ${{ secrets.vm_db_name }}
-          VM_DB_PASSWORD: ${{ secrets.vm_db_password }}
-          VM_DB_USER: ${{ secrets.vm_db_user }}
-          VM_DB_HOST: ${{ secrets.VM_DB_HOST }}
-          DIALECT: ${{ secrets.DIALECT }}
-          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          PUBSUB_TOPIC_NAME: ${{ secrets.PUBSUB_TOPIC_NAME }}
-          APPLICATION_PORT: ${{ secrets.PORT }}
-
-        run: |
           gcloud compute instance-templates create ${{env.INSTANCE_TEMPLATE_NAME}} \
-              --project=${{ env.PROJECT_ID }} \
+              --project=${{env.PROJECT_ID}} \
               --region=${{ env.VM_REGION }} \
               --instance-template-region=${{ env.VM_REGION }} \
               --machine-type=${{ env.VM_MACHINE_TYPE }} \
@@ -106,7 +76,7 @@ jobs:
               --subnet=${{ env.VM_SUBNETWORK }} \
               --image=${{ env.NEW_IMAGE }} \
               --boot-disk-type=pd-standard \
-              --metadata=startup-script='#! /bin/bash
+              --metadata=startup-script="#! /bin/bash
                 port=${{ env.APPLICATION_PORT }}
                 mysql_host=${{ env.VM_DB_HOST }}
                 mysql_user=${{ env.VM_DB_USER }}
@@ -114,39 +84,21 @@ jobs:
                 mysql_database=${{ env.VM_DB_NAME }}
                 dialect=${{ env.DIALECT }}
                 mysql_port=${{ env.MYSQL_PORT }}
-                node_env="production"
-                webapp_url = basavarajpatil.me
-                pubsub_topic_url = "projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}"
-                # go to the project directory and create a .env file
+                node_env=\"production\"
+                webapp_url=basavarajpatil.me
+                pubsub_topic_url=\"projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}\"
                 cd /opt/projects/webapp
-                
-                # create a .env file
                 sudo touch .env
-                
-                # write the environment variables to the .env file, take values from the terraform output
-                echo "PORT= ${port}" >> /opt/projects/webapp/.env
-                echo "MYSQL_HOST= ${mysql_host}" >> /opt/projects/webapp/.env
-                echo "MYSQL_USER= ${mysql_user}" >> /opt/projects/webapp/.env
-                echo "MYSQL_PASSWORD= ${mysql_password}" >> /opt/projects/webapp/.env
-                echo "MYSQL_DATABASE= ${mysql_database}" >> /opt/projects/webapp/.env
-                echo "DIALECT= ${dialect}" >> /opt/projects/webapp/.env
-                echo "MYSQL_PORT= ${mysql_port}" >> /opt/projects/webapp/.env
-                echo "NODE_ENV=production" >> /opt/projects/webapp/.env
-                echo "WEBAPP_URL=basavarajpatil.me" >> /opt/projects/webapp/.env
-                echo "PUBSUB_TOPIC_URL=projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}" >> /opt/projects/webapp/.env
-                EOF'
-                # cat <<EOF | sudo tee .env > /dev/null
-                # PORT= ${port}
-                # MYSQL_HOST= ${mysql_host}
-                # MYSQL_USER= ${mysql_user}
-                # MYSQL_PASSWORD= ${mysql_password}
-                # MYSQL_DATABASE= ${mysql_database}
-                # DIALECT= ${dialect}
-                # MYSQL_PORT= ${mysql_port}
-                # NODE_ENV="production"
-                # WEBAPP_URL = basavarajpatil.me
-                # PUBSUB_TOPIC_URL = ${pubsub_topic_url}
-                # EOF'
+                echo \"PORT= ${port}\" >> /opt/projects/webapp/.env
+                echo \"MYSQL_HOST= ${mysql_host}\" >> /opt/projects/webapp/.env
+                echo \"MYSQL_USER= ${mysql_user}\" >> /opt/projects/webapp/.env
+                echo \"MYSQL_PASSWORD= ${mysql_password}\" >> /opt/projects/webapp/.env
+                echo \"MYSQL_DATABASE= ${mysql_database}\" >> /opt/projects/webapp/.env
+                echo \"DIALECT= ${dialect}\" >> /opt/projects/webapp/.env
+                echo \"MYSQL_PORT= ${mysql_port}\" >> /opt/projects/webapp/.env
+                echo \"NODE_ENV=production\" >> /opt/projects/webapp/.env
+                echo \"WEBAPP_URL=basavarajpatil.me\" >> /opt/projects/webapp/.env
+                echo \"PUBSUB_TOPIC_URL=projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}\" >> /opt/projects/webapp/.env"
 
 
       - name: Set instance template for managed instance group
