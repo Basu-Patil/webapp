@@ -107,7 +107,7 @@ jobs:
               --image=${{env.NEW_IMAGE}} \
               --boot-disk-type=pd-standard \
               --scopes=https://www.googleapis.com/auth/cloud-platform
-              --metadata=startup-script="#! /bin/bash
+              --metadata=startup-script='#! /bin/bash
                 port=${{env.APPLICATION_PORT}}
                 mysql_host=${{env.VM_DB_HOST}}
                 mysql_user=${{env.VM_DB_USER}}
@@ -115,21 +115,21 @@ jobs:
                 mysql_database=${{env.VM_DB_NAME}}
                 dialect=${{env.DIALECT}}
                 mysql_port=${{env.MYSQL_PORT}}
-                node_env='production'
+                node_env="production"
                 webapp_url=basavarajpatil.me
-                pubsub_topic_url='projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}'
+                pubsub_topic_url="projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}"
                 cd /opt/projects/webapp
                 sudo touch .env
-                echo 'PORT= ${port}' >> /opt/projects/webapp/.env
-                echo 'MYSQL_HOST= ${mysql_host}' >> /opt/projects/webapp/.env
-                echo 'MYSQL_USER= ${mysql_user}' >> /opt/projects/webapp/.env
-                echo 'MYSQL_PASSWORD= ${mysql_password}' >> /opt/projects/webapp/.env
-                echo 'MYSQL_DATABASE= ${mysql_database}' >> /opt/projects/webapp/.env
-                echo 'DIALECT= ${dialect}' >> /opt/projects/webapp/.env
-                echo 'MYSQL_PORT= ${mysql_port}' >> /opt/projects/webapp/.env
-                echo 'NODE_ENV=production' >> /opt/projects/webapp/.env
-                echo 'WEBAPP_URL=basavarajpatil.me' >> /opt/projects/webapp/.env
-                echo 'PUBSUB_TOPIC_URL=projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}' >> /opt/projects/webapp/.env"
+                echo "PORT= ${port}" >> /opt/projects/webapp/.env
+                echo "MYSQL_HOST= ${mysql_host}" >> /opt/projects/webapp/.env
+                echo "MYSQL_USER= ${mysql_user}" >> /opt/projects/webapp/.env
+                echo "MYSQL_PASSWORD= ${mysql_password}" >> /opt/projects/webapp/.env
+                echo "MYSQL_DATABASE= ${mysql_database}" >> /opt/projects/webapp/.env
+                echo "DIALECT= ${dialect}" >> /opt/projects/webapp/.env
+                echo "MYSQL_PORT= ${mysql_port}" >> /opt/projects/webapp/.env
+                echo "NODE_ENV=production" >> /opt/projects/webapp/.env
+                echo "WEBAPP_URL=basavarajpatil.me" >> /opt/projects/webapp/.env
+                echo "PUBSUB_TOPIC_URL=projects/${{ env.PROJECT_ID }}/topics/${{ env.PUBSUB_TOPIC_NAME }}" >> /opt/projects/webapp/.env'
 
 
       - name: Set instance template for managed instance group
