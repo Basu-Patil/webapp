@@ -142,7 +142,7 @@ jobs:
         run: |
           gcloud compute instance-groups managed set-instance-template ${{env.INSTANCE_GROUP}} \
               --template=projects/${{env.PROJECT_ID}}/regions/${{env.REGION}}/instanceTemplates/${{env.INSTANCE_TEMPLATE_NAME}} \
-              --region=${{env.REGION}}
+              --region=${{env.REGION}} \
               --project=${{env.PROJECT_ID}}
 
       - name: Start rolling update
@@ -154,14 +154,16 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
           gcloud compute instance-groups managed rolling-action start-update ${{env.INSTANCE_GROUP}} \
-              --version template=projects/${{env.PROJECT_ID}}/regions/${{env.REGION}}/instanceTemplates/${{env.INSTANCE_TEMPLATE_NAME}} \
-              --region=${{env.REGION}}
+              --version=template=projects/${{env.PROJECT_ID}}/regions/${{env.REGION}}/instanceTemplates/${{env.INSTANCE_TEMPLATE_NAME}} \
+              --region=${{env.REGION}} \
               --project=${{env.PROJECT_ID}}
 
       - name: Wait for rolling update to complete
         id: wait-update
+        env:
+          REGION: ${{ secrets.INSTACE_GROUP_REGION }}
+          INSTANCE_GROUP: ${{ secrets.INSTANCE_GROUP }}
         run: |
-          while [[ $(gcloud compute instance-groups managed list-instance-updates $INSTANCE_GROUP --region=$REGION --filter="status=RUNNING" --format="value(status)") == "RUNNING" ]]; do
-            echo "Update is still running..."
-            sleep 60
-          done
+            gcloud compute instance-groups managed wait-until ${{env.INSTANCE_GROUP}} \
+              --version-target-reached \
+              --region=${{ env.REGION }}
