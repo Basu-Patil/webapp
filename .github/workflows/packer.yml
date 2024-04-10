@@ -93,6 +93,8 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           PUBSUB_TOPIC_NAME: ${{ secrets.PUBSUB_TOPIC_NAME }}
           APPLICATION_PORT: ${{ secrets.PORT }}
+          KMS_KEY_RING: ${{ secrets.KMS_KEY_RING }}
+          VM_KMS_KEY: ${{ secrets.VM_KMS_KEY }}
 
         run: |
           gcloud compute instance-templates create ${{env.INSTANCE_TEMPLATE_NAME}} \
@@ -106,6 +108,7 @@ jobs:
               --subnet=${{env.VM_SUBNETWORK}} \
               --image=${{env.NEW_IMAGE}} \
               --boot-disk-type=pd-standard \
+              --boot-disk-kms-key=projects/${{ env.PROJECT_ID }}/locations/${{ env.VM_REGION }}/keyRings/${{ env.KMS_KEY_RING}}/cryptoKeys/${{ env.VM_KMS_KEY }} \
               --scopes=https://www.googleapis.com/auth/cloud-platform \
               --metadata=startup-script='#! /bin/bash
                 port=${{env.APPLICATION_PORT}}
