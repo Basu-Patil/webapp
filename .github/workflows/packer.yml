@@ -158,6 +158,8 @@ jobs:
         run: |
           gcloud compute instance-groups managed rolling-action start-update ${{env.INSTANCE_GROUP}} \
               --version=template=projects/${{env.PROJECT_ID}}/regions/${{env.REGION}}/instanceTemplates/${{env.INSTANCE_TEMPLATE_NAME}} \
+              --max-unavailable=0 \
+              --max-surge=1 \
               --region=${{env.REGION}} \
               --project=${{env.PROJECT_ID}}
 
