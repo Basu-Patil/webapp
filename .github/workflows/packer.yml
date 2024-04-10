@@ -106,7 +106,7 @@ jobs:
               --subnet=${{env.VM_SUBNETWORK}} \
               --image=${{env.NEW_IMAGE}} \
               --boot-disk-type=pd-standard \
-              --scopes=https://www.googleapis.com/auth/cloud-platform
+              --scopes=https://www.googleapis.com/auth/cloud-platform \
               --metadata=startup-script='#! /bin/bash
                 port=${{env.APPLICATION_PORT}}
                 mysql_host=${{env.VM_DB_HOST}}
