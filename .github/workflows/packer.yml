@@ -168,5 +168,5 @@ jobs:
           INSTANCE_GROUP: ${{ secrets.INSTANCE_GROUP }}
         run: |
             gcloud compute instance-groups managed wait-until ${{env.INSTANCE_GROUP}} \
-              --version-target-reached \
+              --stable \
               --region=${{ env.REGION }}
