@@ -31,7 +31,7 @@ jobs:
             PORT: ${{ secrets.PORT }}
             MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
             MYSQL_USER: "root"
-            MYSQL_PASSWORD: ""
+            MYSQL_PASSWORD: "root"
             MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
             DIALECT: ${{ secrets.DIALECT }}
             MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
