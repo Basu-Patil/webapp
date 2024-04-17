@@ -32,12 +32,12 @@ jobs:
             MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
             MYSQL_USER: "root"
             MYSQL_PASSWORD: "root"
-            MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+            MYSQL_DATABASE: "web_app_db"
             DIALECT: ${{ secrets.DIALECT }}
             MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
             NODE_ENV: 'test'
             JWT_SECRET: ${{ secrets.JWT_SECRET }}
-            
+
             
             
       
