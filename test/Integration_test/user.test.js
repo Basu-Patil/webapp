@@ -40,7 +40,7 @@ describe("Success User API Integration Test", () => {
 
     // Test 1: Create a new user
     it("Should return 201 status code for successful user creation", async () => {
-        const resp = await request.post('/v1/user')
+        const resp = await request.post('/v3/user')
             .send(userDetails);
         
         expect(resp.status).to.equal(201);
@@ -50,7 +50,7 @@ describe("Success User API Integration Test", () => {
 
     // Test 2: Get a user
     it("Should return 200 status code for successful user retrieval", async () => {
-        const resp = await request.get('/v1/user/self')
+        const resp = await request.get('/v3/user/self')
             .auth(userDetails.username, userDetails.password);
         
         expect(resp.status).to.equal(200);
@@ -58,7 +58,7 @@ describe("Success User API Integration Test", () => {
 
     // Test 3: Update a user
     it("Should return 204 status code for successful user update", async () => {
-        const resp = await request.put('/v1/user/self')
+        const resp = await request.put('/v3/user/self')
             .auth(userDetails.username, userDetails.password)
             .send({ "first_name": "updated" });
         
@@ -67,7 +67,7 @@ describe("Success User API Integration Test", () => {
 
     // Test 4: Get a user
     it("Should return 200 status code for successful user retrieval", async () => {
-        const resp = await request.get('/v1/user/self')
+        const resp = await request.get('/v3/user/self')
             .auth(userDetails.username, userDetails.password);
         
         expect(resp.status).to.equal(200);
@@ -79,7 +79,7 @@ describe("Success User API Integration Test", () => {
 describe("Failure User API Integration Test", () => {
     // Test 1: Bad Request for creating a user with same username
     it("Should return 400  status code for creating duplicate user", async () => {
-        const resp = await request.post('/v1/user')
+        const resp = await request.post('/v3/user')
             .send(userDetails);
         
         expect(resp.status).to.equal(400);
@@ -87,7 +87,7 @@ describe("Failure User API Integration Test", () => {
 
     // Test 2: unauthorized access
     it("Should return 401 status code for unauthorized access", async () => {
-        const resp = await request.get('/v1/user/self')
+        const resp = await request.get('/v3/user/self')
                                   .auth(userDetails.username, "wrongpassword");
         
         expect(resp.status).to.equal(401);
@@ -95,7 +95,7 @@ describe("Failure User API Integration Test", () => {
 
     // Test 3: Bad Request for updating a username
     it("Should return 400 status code for updating username", async () => {
-        const resp = await request.put('/v1/user/self')
+        const resp = await request.put('/v3/user/self')
             .auth(userDetails.username, userDetails.password)
             .send(updatedUserDetails);
 
