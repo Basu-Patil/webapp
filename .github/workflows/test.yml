@@ -28,13 +28,13 @@ jobs:
         - name: Run Integration Tests
           run: npm test
           env:
-            PORT: ${{ secrets.PORT }}
-            MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+            PORT: "8080"
+            MYSQL_HOST: "localhost"
             MYSQL_USER: "root"
             MYSQL_PASSWORD: "root"
             MYSQL_DATABASE: "web_app_db"
-            DIALECT: ${{ secrets.DIALECT }}
-            MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+            DIALECT: "mysql"
+            MYSQL_PORT: "3306"
             NODE_ENV: 'test'
             JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
