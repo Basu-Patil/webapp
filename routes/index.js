@@ -9,9 +9,9 @@ import verifyUserRouter from "./verifyUserRoute.js";
 
 const registerRouter = (app) => {
     webappLogger.info('Entering registerRouter function in routes/index.js');
-    app.use("/healthz",healthCheck, onlyGetMethodAllowed, noQueryParams, health_check_router);
-    app.use("/v1/user",healthCheck, noQueryParams, userRouter);
-    app.use('/verify',verifyUserRouter);
+    app.use("/v3/healthz",healthCheck, onlyGetMethodAllowed, noQueryParams, health_check_router);
+    app.use("/v3/user",healthCheck, noQueryParams, userRouter);
+    app.use('/v3/verify',verifyUserRouter);
     webappLogger.info('Exiting registerRouter function in routes/index.js');
 }
 

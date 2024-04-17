@@ -65,7 +65,7 @@ export const createUser = async (user) => {
         const message = {
             toAddress: username,
             subject: 'Verify your account',
-            link: `https://${webappUrl}/verify?token=${uniqueToken}&username=${username}`,
+            link: `https://${webappUrl}/v3/verify?token=${uniqueToken}&username=${username}`,
             fullName: `${first_name} ${last_name}`
         }
         const msgId = await publishMessage(`${process.env.PUBSUB_TOPIC_URL}`,message);
